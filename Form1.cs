@@ -14,6 +14,11 @@ namespace SnakeForms
         int punti;
         string verso = "destra";
         Random caso = new Random();
+        string migliorNome = "";
+        int migliorPunteggio = 0;
+        bool classificaAperta = false;
+
+
 
         public Form1()
         {
@@ -50,6 +55,23 @@ namespace SnakeForms
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.P && !classificaAperta)
+            {
+                classificaAperta = true;
+                timerGioco.Stop();
+                if (System.IO.File.Exists("punteggio.txt"))
+                {
+                    string classifica = System.IO.File.ReadAllText("punteggio.txt");
+                    MessageBox.Show(classifica, "Classifica");
+                }
+                else
+                    MessageBox.Show("Nessun punteggio registrato.", "Classifica");
+
+                timerGioco.Start();
+                e.Handled = true;
+                return; 
+            }
+            classificaAperta = false;
             switch (e.KeyCode)
             {
                 case Keys.Left:
@@ -76,6 +98,7 @@ namespace SnakeForms
                 case Keys.S:
                     if (verso != "su") verso = "giu";
                     break;
+
             }
         }
 
@@ -105,6 +128,14 @@ namespace SnakeForms
             {
                 timerGioco.Stop();
                 MessageBox.Show("Hai perso! Punti: " + punti);
+                using (var form = new InserisciNomeForm())
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        string nome = form.NomeGiocatore;
+                        System.IO.File.AppendAllText("punteggio.txt", $"{nome}:{punti}{Environment.NewLine}");
+                    }
+                }
                 AvviaGioco();
                 return;
             }
@@ -115,6 +146,14 @@ namespace SnakeForms
                 {
                     timerGioco.Stop();
                     MessageBox.Show("Hai perso! Punti: " + punti);
+                    using (var form = new InserisciNomeForm())
+                    {
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            string nome = form.NomeGiocatore;
+                            System.IO.File.AppendAllText("punteggio.txt", $"{nome}:{punti}{Environment.NewLine}");
+                        }
+                    }
                     AvviaGioco();
                     return;
                 }
@@ -134,6 +173,12 @@ namespace SnakeForms
                 CreaCibo();
             }
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics graf = e.Graphics;
