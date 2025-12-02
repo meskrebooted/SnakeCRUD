@@ -1,10 +1,15 @@
-# SnakeForms
-Il codice dello Snake che sto facendo è molto simile ed inspirato da 
-https://github.com/nayanbunny/Snake-Game-CSharp
-con array al posto delle list.
-<div align="center">
-  <img  src="snakes.png" height="300px"alt="Snake" />
-</div>
+```markdown
+# SnakeCRUD
+### Descrizione
+**SnakeCRUD** è un fork dell’ applicazione Windows Forms **SnakeFORMS** scritta in C#. Il progetto unisce il classico gioco Snake con una gestione CRUD della classifica.
 
-## Download
-[![Download zip](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "Download zip")](https://github.com/meskrebooted/SnakeForms/zipball/main)
+---
+
+### Tecnologie utilizzate
+- **Linguaggio**: C#
+- **Framework**: Windows Forms
+- **IDE**: Visual Studio 2022
+- **Version Control**: GitHub
+
+---
+```
