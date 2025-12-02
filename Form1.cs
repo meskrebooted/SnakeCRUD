@@ -17,6 +17,8 @@ namespace SnakeForms
         string migliorNome = "";
         int migliorPunteggio = 0;
         bool classificaAperta = false;
+        bool coloreAperto = false;
+        Brush colSerpe = Brushes.Green; // colore serpente (default verde)
 
 
 
@@ -38,10 +40,32 @@ namespace SnakeForms
 
         private void AvviaGioco()
         {
+            timerGioco.Stop();
+            if (coloreAperto == false)
+            {
+                MessageBox.Show("Scegli il colore del serpente", "Scegli il colore");
+                using (ColorDialog dlg = new ColorDialog())
+                {
+                    dlg.Color = Color.Green; // colore iniziale
+                    dlg.FullOpen = true;     // apre subito la palette
+
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        colSerpe = new SolidBrush(dlg.Color); // salva colore scelto
+                    }
+                }
+            }
+            coloreAperto = true;
+            this.WindowState = FormWindowState.Normal; // se era minimizzata, torna normale
+            this.Activate();                           // porta la finestra in primo piano
+            this.Focus();                              // assicura il focus sulla finestra
+
+
             lung = 1;
             serpe[0] = new Parte { x = 5, y = 5 };
             verso = "destra";
             punti = 0;
+
             Snake.Text = "Punti: 0";
             CreaCibo();
             timerGioco.Start();
@@ -71,6 +95,24 @@ namespace SnakeForms
                 e.Handled = true;
                 return; 
             }
+            if (e.KeyCode == Keys.O && coloreAperto)
+            {
+                coloreAperto = false;
+                timerGioco.Stop(); 
+                    using (ColorDialog dlg = new ColorDialog())
+                     {
+                         dlg.Color = Color.Green;
+                         if (dlg.ShowDialog() == DialogResult.OK)
+                         {
+                           colSerpe = new SolidBrush(dlg.Color);
+                             this.Invalidate(); // ridisegna subito
+                         }
+                     }
+                         timerGioco.Start();
+                         e.Handled = true;
+                         return;
+                       }
+            coloreAperto = true;
             classificaAperta = false;
             switch (e.KeyCode)
             {
@@ -179,10 +221,14 @@ namespace SnakeForms
 
         }
 
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics graf = e.Graphics;
-            Brush colSerpe = Brushes.Green;
             Brush colCibo = Brushes.Red;
 
             for (int i = 0; i < lung; i++)

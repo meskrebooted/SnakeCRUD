@@ -18,3 +18,13 @@ C:\Users\meskaoui.22050\Downloads\snakefororm\meskrebooted-SnakeForms-Release-6-
 C:\Users\meskaoui.22050\Downloads\snakefororm\meskrebooted-SnakeForms-Release-6-g23188ff (1)\meskrebooted-SnakeForms-23188ff\obj\Debug\SnakeForms.csproj.CoreCompileInputs.cache
 C:\Users\meskaoui.22050\Downloads\snakefororm\meskrebooted-SnakeForms-Release-6-g23188ff (1)\meskrebooted-SnakeForms-23188ff\obj\Debug\SnakeForms.exe
 C:\Users\meskaoui.22050\Downloads\snakefororm\meskrebooted-SnakeForms-Release-6-g23188ff (1)\meskrebooted-SnakeForms-23188ff\obj\Debug\SnakeForms.pdb
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\bin\Debug\SnakeForms.exe.config
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\bin\Debug\SnakeForms.exe
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\bin\Debug\SnakeForms.pdb
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\obj\Debug\SnakeForms.csproj.AssemblyReference.cache
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\obj\Debug\SnakeForms.Form1.resources
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\obj\Debug\SnakeForms.Properties.Resources.resources
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\obj\Debug\SnakeForms.csproj.GenerateResource.cache
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\obj\Debug\SnakeForms.csproj.CoreCompileInputs.cache
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\obj\Debug\SnakeForms.exe
+C:\Users\meskaoui.22050\Source\Repos\meskrebooted\SnakeCRUD\obj\Debug\SnakeForms.pdb
