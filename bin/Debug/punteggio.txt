@@ -4,5 +4,5 @@ sus:4
 Adam:1
 Anonimo:0
 Anonimo:2
-Anonimo:0
+
 
