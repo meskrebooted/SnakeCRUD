@@ -10,6 +10,7 @@ namespace SnakeForms
     {
         // Gioco
         Parte[] serpe = new Parte[100];
+        Timer timerFPS = new Timer();
         int lung = 0;
         Parte cibo = new Parte();
         int larghMax, altMax;
@@ -29,6 +30,9 @@ namespace SnakeForms
             InitializeComponent();
             this.KeyPreview = true;
             timerGioco.Tick += timerGioco_Tick;
+            timerFPS.Interval = 16; // ~60 FPS 
+            timerFPS.Tick += (s, e) => panelGame.Invalidate();
+            timerFPS.Start();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -400,7 +404,6 @@ namespace SnakeForms
                 Rectangle r = new Rectangle(serpe[i].x * cell, serpe[i].y * cell, cell, cell);
                 g.FillRectangle(colSerpe, r);
             }
-
             // Ombra mela
             Rectangle rOmbraMela = new Rectangle(cibo.x * cell + 2, cibo.y * cell + 2, cell, cell);
             g.FillRectangle(Brushes.Black, rOmbraMela);
@@ -411,6 +414,6 @@ namespace SnakeForms
             g.FillRectangle(Brushes.Red, new Rectangle(cibo.x * cell, cibo.y * cell, cell, cell));
         }
 
+
     }
 }
-
