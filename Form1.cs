@@ -1,25 +1,27 @@
-﻿using SnakeForms;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace SnakeForms
 {
     public partial class Form1 : Form
     {
-        // Stato gioco
+        // Gioco
         Parte[] serpe = new Parte[100];
         int lung = 0;
         Parte cibo = new Parte();
-        int larghMax, altMax;      // celle in larghezza/altezza (20px per cella)
+        int larghMax, altMax;
         int punti;
         string verso = "destra";
         Random caso = new Random();
-        Brush colSerpe = Brushes.Green; // colore serpente (default)
+        Brush colSerpe = Brushes.Green;
 
-        // Flag
+        // Classifica (array)
+        Classifica classifica = new Classifica();
+        string fileClassifica = "punteggi.xml";
+
         bool coloreAperto = false;
 
         public Form1()
@@ -32,10 +34,11 @@ namespace SnakeForms
         private void Form1_Load(object sender, EventArgs e)
         {
             AggiornaGriglia();
+            CaricaClassifica();
             MostraMenu();
         }
 
-        // --- UI switching ---
+        // ----- UI switching -----
         private void MostraMenu()
         {
             panelMenu.Visible = true;
@@ -48,7 +51,6 @@ namespace SnakeForms
             panelMenu.Visible = false;
             panelGame.Visible = true;
             panelSalvataggi.Visible = false;
-
         }
 
         private void MostraSalvataggi()
@@ -56,12 +58,12 @@ namespace SnakeForms
             panelMenu.Visible = false;
             panelGame.Visible = false;
             panelSalvataggi.Visible = true;
+            CaricaListaSalvataggi();
         }
 
-        // --- Bottoni Menu ---
+        // ----- Bottoni menu -----
         private void btnGioca_Click(object sender, EventArgs e)
         {
-            // Chiedi colore una volta per sessione
             if (!coloreAperto)
             {
                 using (ColorDialog dlg = new ColorDialog())
@@ -81,7 +83,6 @@ namespace SnakeForms
         private void btnModifica_Click(object sender, EventArgs e)
         {
             MostraSalvataggi();
-            CaricaSalvataggi();
         }
 
         private void btnEsci_Click(object sender, EventArgs e)
@@ -89,18 +90,25 @@ namespace SnakeForms
             Close();
         }
 
-        // --- Bottoni Salvataggi ---
+        // ----- Classifica -----
+
+        private void CaricaListaSalvataggi()
+        {
+            lstSalvataggi.Items.Clear();
+            for (int i = 0; i < classifica.Count; i++)
+            {
+                lstSalvataggi.Items.Add(classifica.Punteggi[i]);
+            }
+        }
+
         private void btnElimina_Click(object sender, EventArgs e)
         {
-            if (lstSalvataggi.SelectedItem == null) return;
-            string daEliminare = lstSalvataggi.SelectedItem.ToString();
-            var righe = new List<string>();
-            if (File.Exists("punteggio.txt"))
-                righe.AddRange(File.ReadAllLines("punteggio.txt"));
+            int index = lstSalvataggi.SelectedIndex;
+            if (index < 0 || index >= classifica.Count) return;
 
-            righe.Remove(daEliminare);
-            File.WriteAllLines("punteggio.txt", righe.ToArray());
-            CaricaSalvataggi();
+            classifica.Elimina(index);
+            SalvaClassifica();
+            CaricaListaSalvataggi();
         }
 
         private void btnIndietro_Click(object sender, EventArgs e)
@@ -108,27 +116,65 @@ namespace SnakeForms
             MostraMenu();
         }
 
-        private void CaricaSalvataggi()
+        private void btnModificaSel_Click(object sender, EventArgs e)
         {
-            lstSalvataggi.Items.Clear();
-            if (File.Exists("punteggio.txt"))
+            int index = lstSalvataggi.SelectedIndex;
+            if (index < 0 || index >= classifica.Count) return;
+
+            Punteggio selezionato = classifica.Punteggi[index];
+
+            using (var frm = new InserisciNomeForm(selezionato.Nome))
             {
-                string[] righe = File.ReadAllLines("punteggio.txt");
-                lstSalvataggi.Items.AddRange(righe);
+                if (frm.ShowDialog(this) == DialogResult.OK)
+                {
+                    string nuovoNome = frm.NomeGiocatore;
+                    if (!string.IsNullOrWhiteSpace(nuovoNome))
+                    {
+                        selezionato.Nome = nuovoNome;
+                        SalvaClassifica();
+                        CaricaListaSalvataggi();
+                    }
+                }
             }
         }
 
-        // --- Gioco ---
+        // ----- Persistenza XML -----
+
+        private void SalvaClassifica()
+        {
+            try
+            {
+                XmlSerializer xml = new XmlSerializer(typeof(Classifica));
+                using (FileStream fs = new FileStream(fileClassifica, FileMode.Create))
+                {
+                    xml.Serialize(fs, classifica);
+                }
+            }
+            catch { }
+        }
+
+        private void CaricaClassifica()
+        {
+            if (!File.Exists(fileClassifica)) return;
+
+            try
+            {
+                XmlSerializer xml = new XmlSerializer(typeof(Classifica));
+                using (FileStream fs = new FileStream(fileClassifica, FileMode.Open))
+                {
+                    classifica = (Classifica)xml.Deserialize(fs);
+                }
+            }
+            catch { }
+        }
+
+        // ----- Gioco -----
+
         private void AggiornaGriglia()
         {
-            // Calcola dimensioni della griglia in base al panelGame
             int w = panelGame.ClientSize.Width;
             int h = panelGame.ClientSize.Height;
-            if (w <= 0 || h <= 0)
-            {
-                w = this.ClientSize.Width;
-                h = this.ClientSize.Height;
-            }
+
             larghMax = Math.Max(1, w / 20);
             altMax = Math.Max(1, h / 20);
         }
@@ -146,6 +192,7 @@ namespace SnakeForms
             serpe[0] = new Parte { x = 5, y = 5 };
             verso = "destra";
             punti = 0;
+
             lblPunti.Text = "Punti: 0";
             lblEsito.Text = "";
             txtNome.Visible = false;
@@ -153,7 +200,8 @@ namespace SnakeForms
 
             AggiornaGriglia();
             CreaCibo();
-            timerGioco.Interval = 120; // velocità base
+
+            timerGioco.Interval = 120;
             timerGioco.Start();
             panelGame.Invalidate();
         }
@@ -172,14 +220,12 @@ namespace SnakeForms
 
         private void MuoviSerpe()
         {
-            // scorrimento corpo
             for (int i = lung - 1; i > 0; i--)
             {
                 serpe[i].x = serpe[i - 1].x;
                 serpe[i].y = serpe[i - 1].y;
             }
 
-            // direzione
             switch (verso)
             {
                 case "sinistra": serpe[0].x--; break;
@@ -188,14 +234,13 @@ namespace SnakeForms
                 case "giu": serpe[0].y++; break;
             }
 
-            // collisione con bordo
-            if (serpe[0].x < 0 || serpe[0].y < 0 || serpe[0].x >= larghMax || serpe[0].y >= altMax)
+            if (serpe[0].x < 0 || serpe[0].y < 0 ||
+                serpe[0].x >= larghMax || serpe[0].y >= altMax)
             {
                 FinePartita();
                 return;
             }
 
-            // collisione con se stesso
             for (int i = 1; i < lung; i++)
             {
                 if (serpe[0].x == serpe[i].x && serpe[0].y == serpe[i].y)
@@ -205,7 +250,6 @@ namespace SnakeForms
                 }
             }
 
-            // mangia cibo
             if (serpe[0].x == cibo.x && serpe[0].y == cibo.y)
             {
                 if (lung < serpe.Length)
@@ -217,6 +261,7 @@ namespace SnakeForms
                     };
                     lung++;
                 }
+
                 punti++;
                 lblPunti.Text = "Punti: " + punti;
                 CreaCibo();
@@ -235,105 +280,131 @@ namespace SnakeForms
         private void btnSalva_Click(object sender, EventArgs e)
         {
             string nome = txtNome.Text.Trim();
-            if (string.IsNullOrEmpty(nome)) nome = "Anonimo";
+            if (nome == "") nome = "Anonimo";
 
-            File.AppendAllText("punteggio.txt", $"{nome}:{punti}{Environment.NewLine}");
+            Punteggio p = new Punteggio
+            {
+                Nome = nome,
+                Punti = punti,
+                Data = DateTime.Now
+            };
 
-            // reset UI e torna al menu
+            classifica.Aggiungi(p);
+            SalvaClassifica();
+
             txtNome.Visible = false;
             btnSalva.Visible = false;
             lblEsito.Text = "";
             MostraMenu();
         }
 
-        // --- Input tastiera ---
+        // ----- Input -----
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            // durante gioco: P apre salvataggi, O cambia colore
+            // Se sto scrivendo il nome, NON permettere P o O
+            if (txtNome.Visible && txtNome.Focused)
+            {
+                // Permetti solo lettere, numeri, backspace ecc.
+                return;
+            }
+
+            // Se siamo nel gioco
             if (panelGame.Visible)
             {
+                // Tasto P = apri salvataggi SOLO se non sto scrivendo
                 if (e.KeyCode == Keys.P)
                 {
                     timerGioco.Stop();
-                    CaricaSalvataggi();
                     MostraSalvataggi();
-                    e.Handled = true;
                     return;
                 }
 
+                // Tasto O = cambia colore SOLO se non sto scrivendo
                 if (e.KeyCode == Keys.O)
                 {
-                    // Metti in pausa
                     timerGioco.Stop();
-
                     using (ColorDialog dlg = new ColorDialog())
                     {
                         dlg.Color = Color.Green;
                         dlg.FullOpen = true;
                         if (dlg.ShowDialog() == DialogResult.OK)
-                        {
                             colSerpe = new SolidBrush(dlg.Color);
-                            panelGame.Invalidate();
-                        }
                     }
-
-                    // Riprendi il gioco dopo la scelta
                     timerGioco.Start();
-
-                    e.Handled = true;
                     return;
                 }
 
+
+                // --- Controlli movimento serpente ---
+                switch (e.KeyCode)
+                {
+                    case Keys.Left:
+                    case Keys.A:
+                        if (verso != "destra") verso = "sinistra";
+                        break;
+
+                    case Keys.Right:
+                    case Keys.D:
+                        if (verso != "sinistra") verso = "destra";
+                        break;
+
+                    case Keys.Up:
+                    case Keys.W:
+                        if (verso != "giu") verso = "su";
+                        break;
+
+                    case Keys.Down:
+                    case Keys.S:
+                        if (verso != "su") verso = "giu";
+                        break;
+                }
             }
 
-            // controllo direzioni (wasd + frecce)
-            switch (e.KeyCode)
-            {
-                case Keys.Left:
-                case Keys.A:
-                    if (verso != "destra") verso = "sinistra";
-                    break;
-                case Keys.Right:
-                case Keys.D:
-                    if (verso != "sinistra") verso = "destra";
-                    break;
-                case Keys.Up:
-                case Keys.W:
-                    if (verso != "giu") verso = "su";
-                    break;
-                case Keys.Down:
-                case Keys.S:
-                    if (verso != "su") verso = "giu";
-                    break;
-            }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
+        // ----- Disegno -----
 
-        }
-
-        // --- Disegno sul panel di gioco ---
         private void panelGame_Paint(object sender, PaintEventArgs e)
         {
-            Graphics graf = e.Graphics;
-            Brush colCibo = Brushes.Red;
+            Graphics g = e.Graphics;
             int cell = 20;
 
-            // Disegna serpente
-            for (int i = 0; i < lung; i++)
+            // Colori esatti dall'immagine
+            Color verdeChiaro = ColorTranslator.FromHtml("#aad751"); // RGB(168, 221, 168)
+            Color verdeScuro = ColorTranslator.FromHtml("#a2d149");  // RGB(109, 168, 109)
+
+            // Sfondo checkerboard
+            for (int y = 0; y < altMax; y++)
             {
-                graf.FillRectangle(
-                    colSerpe,
-                    new Rectangle(serpe[i].x * cell, serpe[i].y * cell, cell, cell)
-                );
+                for (int x = 0; x < larghMax; x++)
+                {
+                    bool pari = (x + y) % 2 == 0;
+                    using (Brush sfondo = new SolidBrush(pari ? verdeChiaro : verdeScuro))
+                    {
+                        g.FillRectangle(sfondo, new Rectangle(x * cell, y * cell, cell, cell));
+                    }
+                }
             }
 
-            // Disegna cibo
-            graf.FillRectangle(
-                colCibo,
-                new Rectangle(cibo.x * cell, cibo.y * cell, cell, cell)
-            );
+            // Ombra serpente
+            for (int i = 0; i < lung; i++)
+            {
+                Rectangle rOmbra = new Rectangle(serpe[i].x * cell + 2, serpe[i].y * cell + 2, cell, cell);
+                g.FillRectangle(Brushes.Black, rOmbra);
+            }
+
+            // Serpente
+            for (int i = 0; i < lung; i++)
+            {
+                Rectangle r = new Rectangle(serpe[i].x * cell, serpe[i].y * cell, cell, cell);
+                g.FillRectangle(colSerpe, r);
+            }
+
+            // Cibo
+            g.FillRectangle(Brushes.Red, new Rectangle(cibo.x * cell, cibo.y * cell, cell, cell));
         }
+
+
     }
 }

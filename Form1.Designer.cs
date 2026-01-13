@@ -18,10 +18,12 @@
             this.components = new System.ComponentModel.Container();
             this.timerGioco = new System.Windows.Forms.Timer(this.components);
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.lblTitolo = new System.Windows.Forms.Label();
             this.btnGioca = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
             this.btnEsci = new System.Windows.Forms.Button();
-            this.panelGame = new System.Windows.Forms.Panel();
+            this.panelGame = new SnakeForms.DoubleBufferedPanel();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblPunti = new System.Windows.Forms.Label();
             this.lblEsito = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
@@ -30,14 +32,19 @@
             this.lstSalvataggi = new System.Windows.Forms.ListBox();
             this.btnEliminaSel = new System.Windows.Forms.Button();
             this.btnIndietro = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnModificaSel = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
             this.panelGame.SuspendLayout();
             this.panelSalvataggi.SuspendLayout();
             this.SuspendLayout();
             // 
+            // timerGioco
+            // 
+            this.timerGioco.Interval = 120;
+            // 
             // panelMenu
             // 
+            this.panelMenu.Controls.Add(this.lblTitolo);
             this.panelMenu.Controls.Add(this.btnGioca);
             this.panelMenu.Controls.Add(this.btnModifica);
             this.panelMenu.Controls.Add(this.btnEsci);
@@ -47,31 +54,45 @@
             this.panelMenu.Size = new System.Drawing.Size(800, 450);
             this.panelMenu.TabIndex = 2;
             // 
+            // lblTitolo
+            // 
+            this.lblTitolo.AutoSize = true;
+            this.lblTitolo.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold);
+            this.lblTitolo.ForeColor = System.Drawing.Color.DarkGreen;
+            this.lblTitolo.Location = new System.Drawing.Point(200, 20);
+            this.lblTitolo.Name = "lblTitolo";
+            this.lblTitolo.Size = new System.Drawing.Size(279, 51);
+            this.lblTitolo.TabIndex = 3;
+            this.lblTitolo.Text = "SnakeCRUD";
+            // 
             // btnGioca
             // 
-            this.btnGioca.Location = new System.Drawing.Point(20, 20);
+            this.btnGioca.Location = new System.Drawing.Point(20, 100);
             this.btnGioca.Name = "btnGioca";
             this.btnGioca.Size = new System.Drawing.Size(160, 30);
             this.btnGioca.TabIndex = 0;
             this.btnGioca.Text = "Gioca";
+            this.btnGioca.UseVisualStyleBackColor = true;
             this.btnGioca.Click += new System.EventHandler(this.btnGioca_Click);
             // 
             // btnModifica
             // 
-            this.btnModifica.Location = new System.Drawing.Point(20, 60);
+            this.btnModifica.Location = new System.Drawing.Point(20, 140);
             this.btnModifica.Name = "btnModifica";
             this.btnModifica.Size = new System.Drawing.Size(160, 30);
             this.btnModifica.TabIndex = 1;
             this.btnModifica.Text = "Modifica/Elimina salvataggi";
+            this.btnModifica.UseVisualStyleBackColor = true;
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
             // btnEsci
             // 
-            this.btnEsci.Location = new System.Drawing.Point(20, 100);
+            this.btnEsci.Location = new System.Drawing.Point(20, 180);
             this.btnEsci.Name = "btnEsci";
             this.btnEsci.Size = new System.Drawing.Size(160, 30);
             this.btnEsci.TabIndex = 2;
             this.btnEsci.Text = "Esci";
+            this.btnEsci.UseVisualStyleBackColor = true;
             this.btnEsci.Click += new System.EventHandler(this.btnEsci_Click);
             // 
             // panelGame
@@ -90,6 +111,15 @@
             this.panelGame.Visible = false;
             this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGame_Paint);
             this.panelGame.Resize += new System.EventHandler(this.panelGame_Resize);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(650, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(150, 26);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Premi \"P\" per abbandonare\r\nPremi \"O\" per cambiare colore\r\n";
             // 
             // lblPunti
             // 
@@ -123,6 +153,7 @@
             this.btnSalva.Size = new System.Drawing.Size(120, 24);
             this.btnSalva.TabIndex = 3;
             this.btnSalva.Text = "Salva punteggio";
+            this.btnSalva.UseVisualStyleBackColor = true;
             this.btnSalva.Visible = false;
             this.btnSalva.Click += new System.EventHandler(this.btnSalva_Click);
             // 
@@ -131,6 +162,7 @@
             this.panelSalvataggi.Controls.Add(this.lstSalvataggi);
             this.panelSalvataggi.Controls.Add(this.btnEliminaSel);
             this.panelSalvataggi.Controls.Add(this.btnIndietro);
+            this.panelSalvataggi.Controls.Add(this.btnModificaSel);
             this.panelSalvataggi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSalvataggi.Location = new System.Drawing.Point(0, 0);
             this.panelSalvataggi.Name = "panelSalvataggi";
@@ -140,6 +172,7 @@
             // 
             // lstSalvataggi
             // 
+            this.lstSalvataggi.FormattingEnabled = true;
             this.lstSalvataggi.Location = new System.Drawing.Point(10, 10);
             this.lstSalvataggi.Name = "lstSalvataggi";
             this.lstSalvataggi.Size = new System.Drawing.Size(450, 355);
@@ -152,6 +185,7 @@
             this.btnEliminaSel.Size = new System.Drawing.Size(160, 30);
             this.btnEliminaSel.TabIndex = 1;
             this.btnEliminaSel.Text = "Elimina selezionato";
+            this.btnEliminaSel.UseVisualStyleBackColor = true;
             this.btnEliminaSel.Click += new System.EventHandler(this.btnElimina_Click);
             // 
             // btnIndietro
@@ -161,17 +195,18 @@
             this.btnIndietro.Size = new System.Drawing.Size(160, 30);
             this.btnIndietro.TabIndex = 2;
             this.btnIndietro.Text = "Indietro";
+            this.btnIndietro.UseVisualStyleBackColor = true;
             this.btnIndietro.Click += new System.EventHandler(this.btnIndietro_Click);
             // 
-            // label1
+            // btnModificaSel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(650, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 26);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Premi \"P\" per abbandonare\r\nPremi \"O\" per cambiare colore\r\n";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.btnModificaSel.Location = new System.Drawing.Point(350, 380);
+            this.btnModificaSel.Name = "btnModificaSel";
+            this.btnModificaSel.Size = new System.Drawing.Size(160, 30);
+            this.btnModificaSel.TabIndex = 3;
+            this.btnModificaSel.Text = "Modifica selezionato";
+            this.btnModificaSel.UseVisualStyleBackColor = true;
+            this.btnModificaSel.Click += new System.EventHandler(this.btnModificaSel_Click);
             // 
             // Form1
             // 
@@ -185,6 +220,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.panelMenu.ResumeLayout(false);
+            this.panelMenu.PerformLayout();
             this.panelGame.ResumeLayout(false);
             this.panelGame.PerformLayout();
             this.panelSalvataggi.ResumeLayout(false);
@@ -195,27 +231,21 @@
         #endregion
 
         private System.Windows.Forms.Timer timerGioco;
-
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.Button btnGioca;
         private System.Windows.Forms.Button btnModifica;
         private System.Windows.Forms.Button btnEsci;
-
-        private System.Windows.Forms.Panel panelGame;
+        private SnakeForms.DoubleBufferedPanel panelGame;
         private System.Windows.Forms.Label lblPunti;
         private System.Windows.Forms.Label lblEsito;
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.Button btnSalva;
-
         private System.Windows.Forms.Panel panelSalvataggi;
         private System.Windows.Forms.ListBox lstSalvataggi;
         private System.Windows.Forms.Button btnEliminaSel;
         private System.Windows.Forms.Button btnIndietro;
-        private System.Windows.Forms.Panel panelPausa;
-        private System.Windows.Forms.ListBox lstClassifica;
-        private System.Windows.Forms.Button btnRiprendi;
-        private System.Windows.Forms.Button btnPausaColor;
-        private System.Windows.Forms.Button btnPausaMenu;
+        private System.Windows.Forms.Button btnModificaSel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTitolo;
     }
 }
