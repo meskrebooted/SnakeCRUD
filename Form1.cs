@@ -401,10 +401,16 @@ namespace SnakeForms
                 g.FillRectangle(colSerpe, r);
             }
 
-            // Cibo
+            // Ombra mela
+            Rectangle rOmbraMela = new Rectangle(cibo.x * cell + 2, cibo.y * cell + 2, cell, cell);
+            g.FillRectangle(Brushes.Black, rOmbraMela);
+
+          
+
+            // Mela
             g.FillRectangle(Brushes.Red, new Rectangle(cibo.x * cell, cibo.y * cell, cell, cell));
         }
 
-
     }
 }
+
