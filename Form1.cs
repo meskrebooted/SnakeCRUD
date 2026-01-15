@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -199,6 +200,7 @@ namespace SnakeForms
 
             lblPunti.Text = "Punti: 0";
             lblEsito.Text = "";
+            lblEsito.Visible = false;
             txtNome.Visible = false;
             btnSalva.Visible = false;
 
@@ -276,6 +278,7 @@ namespace SnakeForms
         {
             timerGioco.Stop();
             lblEsito.Text = $"Hai perso! Punti: {punti}";
+            lblEsito.Visible = true;
             txtNome.Visible = true;
             btnSalva.Visible = true;
             txtNome.Focus();
