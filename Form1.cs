@@ -48,6 +48,7 @@ namespace SnakeForms
         {
             panelMenu.Visible = true;
             panelGame.Visible = false;
+            panelInfoLaterale.Visible = false;
             panelSalvataggi.Visible = false;
         }
 
@@ -55,6 +56,7 @@ namespace SnakeForms
         {
             panelMenu.Visible = false;
             panelGame.Visible = true;
+            panelInfoLaterale.Visible = true;
             panelSalvataggi.Visible = false;
         }
 
@@ -62,6 +64,7 @@ namespace SnakeForms
         {
             panelMenu.Visible = false;
             panelGame.Visible = false;
+            panelInfoLaterale.Visible = false;
             panelSalvataggi.Visible = true;
             CaricaListaSalvataggi();
         }
@@ -202,6 +205,7 @@ namespace SnakeForms
             lblEsito.Text = "";
             lblEsito.Visible = false;
             txtNome.Visible = false;
+            txtNome.Text = "Inserisci nome";
             btnSalva.Visible = false;
 
             AggiornaGriglia();
@@ -287,7 +291,7 @@ namespace SnakeForms
         private void btnSalva_Click(object sender, EventArgs e)
         {
             string nome = txtNome.Text.Trim();
-            if (nome == "") nome = "Anonimo";
+            if (nome == "" || nome == "Inserisci nome") nome = "Anonimo";
 
             Punteggio p = new Punteggio
             {
@@ -300,7 +304,9 @@ namespace SnakeForms
             SalvaClassifica();
 
             txtNome.Visible = false;
+            txtNome.Text = "Inserisci nome";
             btnSalva.Visible = false;
+            lblEsito.Visible = false;
             lblEsito.Text = "";
             MostraMenu();
         }

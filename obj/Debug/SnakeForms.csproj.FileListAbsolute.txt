@@ -38,3 +38,13 @@ C:\Users\meskaoui.22050\Downloads\SnakeCRUD-main\SnakeCRUD-main\obj\Debug\SnakeF
 C:\Users\meskaoui.22050\Downloads\SnakeCRUD-main\SnakeCRUD-main\obj\Debug\SnakeForms.csproj.CoreCompileInputs.cache
 C:\Users\meskaoui.22050\Downloads\SnakeCRUD-main\SnakeCRUD-main\obj\Debug\SnakeForms.exe
 C:\Users\meskaoui.22050\Downloads\SnakeCRUD-main\SnakeCRUD-main\obj\Debug\SnakeForms.pdb
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\bin\Debug\SnakeForms.exe.config
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\bin\Debug\SnakeForms.exe
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\bin\Debug\SnakeForms.pdb
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\obj\Debug\SnakeForms.csproj.AssemblyReference.cache
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\obj\Debug\SnakeForms.Form1.resources
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\obj\Debug\SnakeForms.Properties.Resources.resources
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\obj\Debug\SnakeForms.csproj.GenerateResource.cache
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\obj\Debug\SnakeForms.csproj.CoreCompileInputs.cache
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\obj\Debug\SnakeForms.exe
+C:\Users\meskaoui.22050\Documents\GitHub\SnakeCRUD\SnakeCRUD\obj\Debug\SnakeForms.pdb

@@ -22,9 +22,9 @@
             this.btnGioca = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
             this.btnEsci = new System.Windows.Forms.Button();
-            this.panelGame = new SnakeForms.DoubleBufferedPanel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.panelInfoLaterale = new System.Windows.Forms.Panel();
             this.lblPunti = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblEsito = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.btnSalva = new System.Windows.Forms.Button();
@@ -33,8 +33,9 @@
             this.btnEliminaSel = new System.Windows.Forms.Button();
             this.btnIndietro = new System.Windows.Forms.Button();
             this.btnModificaSel = new System.Windows.Forms.Button();
+            this.panelGame = new SnakeForms.DoubleBufferedPanel();
             this.panelMenu.SuspendLayout();
-            this.panelGame.SuspendLayout();
+            this.panelInfoLaterale.SuspendLayout();
             this.panelSalvataggi.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(800, 450);
+            this.panelMenu.Size = new System.Drawing.Size(1000, 600);
             this.panelMenu.TabIndex = 2;
             // 
             // lblTitolo
@@ -60,9 +61,9 @@
             this.lblTitolo.AutoSize = true;
             this.lblTitolo.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
             this.lblTitolo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.lblTitolo.Location = new System.Drawing.Point(220, 50);
+            this.lblTitolo.Location = new System.Drawing.Point(320, 50);
             this.lblTitolo.Name = "lblTitolo";
-            this.lblTitolo.Size = new System.Drawing.Size(360, 65);
+            this.lblTitolo.Size = new System.Drawing.Size(417, 65);
             this.lblTitolo.TabIndex = 3;
             this.lblTitolo.Text = "🐍 SNAKE GAME";
             // 
@@ -75,7 +76,7 @@
             this.btnGioca.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGioca.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.btnGioca.ForeColor = System.Drawing.Color.White;
-            this.btnGioca.Location = new System.Drawing.Point(280, 170);
+            this.btnGioca.Location = new System.Drawing.Point(380, 170);
             this.btnGioca.Name = "btnGioca";
             this.btnGioca.Size = new System.Drawing.Size(240, 55);
             this.btnGioca.TabIndex = 0;
@@ -92,7 +93,7 @@
             this.btnModifica.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModifica.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.btnModifica.ForeColor = System.Drawing.Color.White;
-            this.btnModifica.Location = new System.Drawing.Point(280, 240);
+            this.btnModifica.Location = new System.Drawing.Point(380, 240);
             this.btnModifica.Name = "btnModifica";
             this.btnModifica.Size = new System.Drawing.Size(240, 55);
             this.btnModifica.TabIndex = 1;
@@ -109,7 +110,7 @@
             this.btnEsci.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEsci.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.btnEsci.ForeColor = System.Drawing.Color.White;
-            this.btnEsci.Location = new System.Drawing.Point(280, 310);
+            this.btnEsci.Location = new System.Drawing.Point(380, 310);
             this.btnEsci.Name = "btnEsci";
             this.btnEsci.Size = new System.Drawing.Size(240, 55);
             this.btnEsci.TabIndex = 2;
@@ -117,70 +118,70 @@
             this.btnEsci.UseVisualStyleBackColor = false;
             this.btnEsci.Click += new System.EventHandler(this.btnEsci_Click);
             // 
-            // panelGame
+            // panelInfoLaterale
             // 
-            this.panelGame.BackColor = System.Drawing.Color.White;
-            this.panelGame.Controls.Add(this.label1);
-            this.panelGame.Controls.Add(this.lblPunti);
-            this.panelGame.Controls.Add(this.lblEsito);
-            this.panelGame.Controls.Add(this.txtNome);
-            this.panelGame.Controls.Add(this.btnSalva);
-            this.panelGame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelGame.Location = new System.Drawing.Point(0, 0);
-            this.panelGame.Name = "panelGame";
-            this.panelGame.Size = new System.Drawing.Size(800, 450);
-            this.panelGame.TabIndex = 0;
-            this.panelGame.Visible = false;
-            this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGame_Paint);
-            this.panelGame.Resize += new System.EventHandler(this.panelGame_Resize);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(600, 10);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
-            this.label1.Size = new System.Drawing.Size(190, 53);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "P - Abbandona\r\nO - Cambia colore";
+            this.panelInfoLaterale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.panelInfoLaterale.Controls.Add(this.lblPunti);
+            this.panelInfoLaterale.Controls.Add(this.label1);
+            this.panelInfoLaterale.Controls.Add(this.lblEsito);
+            this.panelInfoLaterale.Controls.Add(this.txtNome);
+            this.panelInfoLaterale.Controls.Add(this.btnSalva);
+            this.panelInfoLaterale.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelInfoLaterale.Location = new System.Drawing.Point(800, 0);
+            this.panelInfoLaterale.Name = "panelInfoLaterale";
+            this.panelInfoLaterale.Size = new System.Drawing.Size(200, 600);
+            this.panelInfoLaterale.TabIndex = 5;
+            this.panelInfoLaterale.Visible = false;
             // 
             // lblPunti
             // 
-            this.lblPunti.AutoSize = true;
-            this.lblPunti.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.lblPunti.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblPunti.ForeColor = System.Drawing.Color.White;
             this.lblPunti.Location = new System.Drawing.Point(10, 10);
             this.lblPunti.Name = "lblPunti";
-            this.lblPunti.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
-            this.lblPunti.Size = new System.Drawing.Size(99, 35);
+            this.lblPunti.Size = new System.Drawing.Size(180, 40);
             this.lblPunti.TabIndex = 0;
             this.lblPunti.Text = "Punti: 0";
+            this.lblPunti.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(10, 60);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.label1.Size = new System.Drawing.Size(180, 70);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "P - Abbandona\r\nO - Cambia colore";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblEsito
             // 
-            this.lblEsito.AutoSize = true;
             this.lblEsito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.lblEsito.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblEsito.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblEsito.ForeColor = System.Drawing.Color.White;
-            this.lblEsito.Location = new System.Drawing.Point(10, 60);
+            this.lblEsito.Location = new System.Drawing.Point(10, 150);
             this.lblEsito.Name = "lblEsito";
-            this.lblEsito.Padding = new System.Windows.Forms.Padding(15, 8, 15, 8);
-            this.lblEsito.Size = new System.Drawing.Size(30, 46);
+            this.lblEsito.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.lblEsito.Size = new System.Drawing.Size(180, 70);
             this.lblEsito.TabIndex = 1;
             this.lblEsito.Text = "";
+            this.lblEsito.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblEsito.Visible = false;
             // 
             // txtNome
             // 
             this.txtNome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
-            this.txtNome.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtNome.Location = new System.Drawing.Point(10, 120);
+            this.txtNome.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtNome.Location = new System.Drawing.Point(10, 230);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(250, 29);
+            this.txtNome.Size = new System.Drawing.Size(180, 25);
             this.txtNome.TabIndex = 2;
+            this.txtNome.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtNome.Visible = false;
+            this.txtNome.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtNome.Visible = false;
             // 
             // btnSalva
@@ -189,11 +190,11 @@
             this.btnSalva.FlatAppearance.BorderSize = 0;
             this.btnSalva.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
             this.btnSalva.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalva.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSalva.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnSalva.ForeColor = System.Drawing.Color.White;
-            this.btnSalva.Location = new System.Drawing.Point(270, 118);
+            this.btnSalva.Location = new System.Drawing.Point(10, 265);
             this.btnSalva.Name = "btnSalva";
-            this.btnSalva.Size = new System.Drawing.Size(150, 33);
+            this.btnSalva.Size = new System.Drawing.Size(180, 35);
             this.btnSalva.TabIndex = 3;
             this.btnSalva.Text = "💾 Salva";
             this.btnSalva.UseVisualStyleBackColor = false;
@@ -210,7 +211,7 @@
             this.panelSalvataggi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSalvataggi.Location = new System.Drawing.Point(0, 0);
             this.panelSalvataggi.Name = "panelSalvataggi";
-            this.panelSalvataggi.Size = new System.Drawing.Size(800, 450);
+            this.panelSalvataggi.Size = new System.Drawing.Size(1000, 600);
             this.panelSalvataggi.TabIndex = 1;
             this.panelSalvataggi.Visible = false;
             // 
@@ -220,7 +221,7 @@
             this.lstSalvataggi.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lstSalvataggi.FormattingEnabled = true;
             this.lstSalvataggi.ItemHeight = 21;
-            this.lstSalvataggi.Location = new System.Drawing.Point(50, 50);
+            this.lstSalvataggi.Location = new System.Drawing.Point(150, 50);
             this.lstSalvataggi.Name = "lstSalvataggi";
             this.lstSalvataggi.Size = new System.Drawing.Size(700, 277);
             this.lstSalvataggi.TabIndex = 0;
@@ -233,7 +234,7 @@
             this.btnEliminaSel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminaSel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnEliminaSel.ForeColor = System.Drawing.Color.White;
-            this.btnEliminaSel.Location = new System.Drawing.Point(50, 360);
+            this.btnEliminaSel.Location = new System.Drawing.Point(150, 360);
             this.btnEliminaSel.Name = "btnEliminaSel";
             this.btnEliminaSel.Size = new System.Drawing.Size(200, 45);
             this.btnEliminaSel.TabIndex = 1;
@@ -249,7 +250,7 @@
             this.btnIndietro.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnIndietro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnIndietro.ForeColor = System.Drawing.Color.White;
-            this.btnIndietro.Location = new System.Drawing.Point(300, 360);
+            this.btnIndietro.Location = new System.Drawing.Point(400, 360);
             this.btnIndietro.Name = "btnIndietro";
             this.btnIndietro.Size = new System.Drawing.Size(200, 45);
             this.btnIndietro.TabIndex = 2;
@@ -265,7 +266,7 @@
             this.btnModificaSel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificaSel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnModificaSel.ForeColor = System.Drawing.Color.White;
-            this.btnModificaSel.Location = new System.Drawing.Point(550, 360);
+            this.btnModificaSel.Location = new System.Drawing.Point(650, 360);
             this.btnModificaSel.Name = "btnModificaSel";
             this.btnModificaSel.Size = new System.Drawing.Size(200, 45);
             this.btnModificaSel.TabIndex = 3;
@@ -273,10 +274,23 @@
             this.btnModificaSel.UseVisualStyleBackColor = false;
             this.btnModificaSel.Click += new System.EventHandler(this.btnModificaSel_Click);
             // 
+            // panelGame
+            // 
+            this.panelGame.BackColor = System.Drawing.Color.White;
+            this.panelGame.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelGame.Location = new System.Drawing.Point(0, 0);
+            this.panelGame.Name = "panelGame";
+            this.panelGame.Size = new System.Drawing.Size(800, 600);
+            this.panelGame.TabIndex = 0;
+            this.panelGame.Visible = false;
+            this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGame_Paint);
+            this.panelGame.Resize += new System.EventHandler(this.panelGame_Resize);
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1000, 600);
             this.Controls.Add(this.panelGame);
+            this.Controls.Add(this.panelInfoLaterale);
             this.Controls.Add(this.panelSalvataggi);
             this.Controls.Add(this.panelMenu);
             this.KeyPreview = true;
@@ -286,8 +300,8 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
-            this.panelGame.ResumeLayout(false);
-            this.panelGame.PerformLayout();
+            this.panelInfoLaterale.ResumeLayout(false);
+            this.panelInfoLaterale.PerformLayout();
             this.panelSalvataggi.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -301,6 +315,7 @@
         private System.Windows.Forms.Button btnModifica;
         private System.Windows.Forms.Button btnEsci;
         private SnakeForms.DoubleBufferedPanel panelGame;
+        private System.Windows.Forms.Panel panelInfoLaterale;
         private System.Windows.Forms.Label lblPunti;
         private System.Windows.Forms.Label lblEsito;
         private System.Windows.Forms.TextBox txtNome;

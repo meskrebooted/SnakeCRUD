@@ -76,8 +76,16 @@
       <Punti>3</Punti>
       <Data>2026-01-15T13:36:38.8929183+01:00</Data>
     </Punteggio>
-    <Punteggio xsi:nil="true" />
-    <Punteggio xsi:nil="true" />
+    <Punteggio>
+      <Nome>Anonimo</Nome>
+      <Punti>0</Punti>
+      <Data>2026-01-16T08:26:53.7029939+01:00</Data>
+    </Punteggio>
+    <Punteggio>
+      <Nome>Adam</Nome>
+      <Punti>14</Punti>
+      <Data>2026-01-16T08:28:20.938121+01:00</Data>
+    </Punteggio>
     <Punteggio xsi:nil="true" />
     <Punteggio xsi:nil="true" />
     <Punteggio xsi:nil="true" />
@@ -162,5 +170,5 @@
     <Punteggio xsi:nil="true" />
     <Punteggio xsi:nil="true" />
   </Punteggi>
-  <Count>15</Count>
+  <Count>17</Count>
 </Classifica>
