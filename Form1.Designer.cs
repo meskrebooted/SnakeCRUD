@@ -37,6 +37,7 @@
             this.txtNome = new System.Windows.Forms.TextBox();
             this.btnSalva = new System.Windows.Forms.Button();
             this.panelSalvataggi = new System.Windows.Forms.Panel();
+            this.lblMessaggioClassifica = new System.Windows.Forms.Label();
             this.lstSalvataggi = new System.Windows.Forms.ListBox();
             this.btnEliminaSel = new System.Windows.Forms.Button();
             this.btnIndietro = new System.Windows.Forms.Button();
@@ -55,7 +56,7 @@
             // 
             // panelMenu
             // 
-            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.panelMenu.Controls.Add(this.lblTitolo);
             this.panelMenu.Controls.Add(this.btnGioca);
             this.panelMenu.Controls.Add(this.btnModifica);
@@ -96,10 +97,10 @@
             // 
             // btnModifica
             // 
-            this.btnModifica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.btnModifica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.btnModifica.FlatAppearance.BorderSize = 0;
-            this.btnModifica.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnModifica.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.btnModifica.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.btnModifica.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.btnModifica.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModifica.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.btnModifica.ForeColor = System.Drawing.Color.White;
@@ -130,7 +131,7 @@
             // 
             // panelDifficolta
             // 
-            this.panelDifficolta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.panelDifficolta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.panelDifficolta.Controls.Add(this.lblScegliDifficolta);
             this.panelDifficolta.Controls.Add(this.btnFacile);
             this.panelDifficolta.Controls.Add(this.btnNormale);
@@ -204,10 +205,10 @@
             // 
             // btnImpossibile
             // 
-            this.btnImpossibile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.btnImpossibile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.btnImpossibile.FlatAppearance.BorderColor = System.Drawing.Color.Red;
             this.btnImpossibile.FlatAppearance.BorderSize = 3;
-            this.btnImpossibile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.btnImpossibile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.btnImpossibile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImpossibile.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.btnImpossibile.ForeColor = System.Drawing.Color.Red;
@@ -221,7 +222,7 @@
             // 
             // panelScegliColore
             // 
-            this.panelScegliColore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.panelScegliColore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.panelScegliColore.Controls.Add(this.lblScegliColore);
             this.panelScegliColore.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelScegliColore.Location = new System.Drawing.Point(0, 0);
@@ -243,7 +244,7 @@
             // 
             // panelInfoLaterale
             // 
-            this.panelInfoLaterale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.panelInfoLaterale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.panelInfoLaterale.Controls.Add(this.lblPunti);
             this.panelInfoLaterale.Controls.Add(this.label1);
             this.panelInfoLaterale.Controls.Add(this.lblEsito);
@@ -269,7 +270,7 @@
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(10, 60);
@@ -323,7 +324,8 @@
             // 
             // panelSalvataggi
             // 
-            this.panelSalvataggi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.panelSalvataggi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.panelSalvataggi.Controls.Add(this.lblMessaggioClassifica);
             this.panelSalvataggi.Controls.Add(this.lstSalvataggi);
             this.panelSalvataggi.Controls.Add(this.btnEliminaSel);
             this.panelSalvataggi.Controls.Add(this.btnIndietro);
@@ -335,6 +337,18 @@
             this.panelSalvataggi.TabIndex = 1;
             this.panelSalvataggi.Visible = false;
             // 
+            // 
+            // lblMessaggioClassifica
+            // 
+            this.lblMessaggioClassifica.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblMessaggioClassifica.ForeColor = System.Drawing.Color.White;
+            this.lblMessaggioClassifica.Location = new System.Drawing.Point(150, 420);
+            this.lblMessaggioClassifica.Name = "lblMessaggioClassifica";
+            this.lblMessaggioClassifica.Size = new System.Drawing.Size(700, 30);
+            this.lblMessaggioClassifica.TabIndex = 4;
+            this.lblMessaggioClassifica.Text = "";
+            this.lblMessaggioClassifica.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // lstSalvataggi
             // 
             this.lstSalvataggi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
@@ -343,6 +357,7 @@
             this.lstSalvataggi.ItemHeight = 21;
             this.lstSalvataggi.Location = new System.Drawing.Point(150, 50);
             this.lstSalvataggi.Name = "lstSalvataggi";
+            this.lstSalvataggi.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lstSalvataggi.Size = new System.Drawing.Size(700, 277);
             this.lstSalvataggi.TabIndex = 0;
             // 
@@ -451,6 +466,7 @@
         private System.Windows.Forms.Button btnEliminaSel;
         private System.Windows.Forms.Button btnIndietro;
         private System.Windows.Forms.Button btnModificaSel;
+        private System.Windows.Forms.Label lblMessaggioClassifica;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTitolo;
         private System.Windows.Forms.Panel panelDifficolta;

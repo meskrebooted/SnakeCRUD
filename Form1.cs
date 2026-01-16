@@ -4,11 +4,18 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Runtime.InteropServices;
 
 namespace SnakeForms
 {
     public partial class Form1 : Form
     {
+        // API per tema scuro della barra del titolo (Windows 10/11)
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+        private const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
+        private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
         // Gioco
         Parte[] serpe = new Parte[100];
         Timer timerFPS = new Timer();
@@ -34,6 +41,31 @@ namespace SnakeForms
             timerFPS.Tick += (s, e) => panelGame.Invalidate();
             timerFPS.Start();
             CreaBottoniColore();
+            AbilitaTemaSc();
+            CreaIconaSerpe();
+        }
+
+        private void AbilitaTemaSc()
+        {
+            int value = 1;
+            if (DwmSetWindowAttribute(this.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, sizeof(int)) != 0)
+                DwmSetWindowAttribute(this.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref value, sizeof(int));
+        }
+
+        private void CreaIconaSerpe()
+        {
+            // Crea un'icona con emoji serpente
+            Bitmap bmp = new Bitmap(32, 32);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.Transparent);
+                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                using (Font font = new Font("Segoe UI Emoji", 24, FontStyle.Regular))
+                {
+                    g.DrawString("🐍", font, Brushes.Green, -2, -2);
+                }
+            }
+            this.Icon = Icon.FromHandle(bmp.GetHicon());
         }
 
         private void CreaBottoniColore()
@@ -73,8 +105,7 @@ namespace SnakeForms
                     Top = startY + (i / colonne) * (btnHeight + spacing),  // i/6 = riga (0-5)
                     Cursor = Cursors.Hand
                 };
-                btn.FlatAppearance.BorderSize = 3;
-                btn.FlatAppearance.BorderColor = Color.White;
+                btn.FlatAppearance.BorderSize = 0;
                 btn.Click += BtnColoreEGioca_Click;  // Tutti i bottoni chiamano la stessa funzione
                 panelScegliColore.Controls.Add(btn);
             }
@@ -204,16 +235,33 @@ namespace SnakeForms
             {
                 lstSalvataggi.Items.Add(classifica.Punteggi[i]);
             }
+            lblMessaggioClassifica.Text = "";
         }
 
         private void btnElimina_Click(object sender, EventArgs e)
         {
-            int index = lstSalvataggi.SelectedIndex;
-            if (index < 0 || index >= classifica.Count) return;
+            if (lstSalvataggi.SelectedIndices.Count == 0)
+            {
+                lblMessaggioClassifica.ForeColor = Color.FromArgb(231, 76, 60);
+                lblMessaggioClassifica.Text = "⚠ Seleziona almeno una persona";
+                return;
+            }
 
-            classifica.Elimina(index);
+            // Elimina dalla fine all'inizio per non alterare gli indici
+            for (int i = lstSalvataggi.SelectedIndices.Count - 1; i >= 0; i--)
+            {
+                int index = lstSalvataggi.SelectedIndices[i];
+                if (index >= 0 && index < classifica.Count)
+                {
+                    classifica.Elimina(index);
+                }
+            }
+
             SalvaClassifica();
             CaricaListaSalvataggi();
+            
+            lblMessaggioClassifica.ForeColor = Color.FromArgb(46, 204, 113);
+            lblMessaggioClassifica.Text = "✓ Eliminate con successo";
         }
 
         private void btnIndietro_Click(object sender, EventArgs e)
@@ -223,7 +271,21 @@ namespace SnakeForms
 
         private void btnModificaSel_Click(object sender, EventArgs e)
         {
-            int index = lstSalvataggi.SelectedIndex;
+            if (lstSalvataggi.SelectedIndices.Count == 0)
+            {
+                lblMessaggioClassifica.ForeColor = Color.FromArgb(231, 76, 60);
+                lblMessaggioClassifica.Text = "⚠ Seleziona una persona";
+                return;
+            }
+
+            if (lstSalvataggi.SelectedIndices.Count > 1)
+            {
+                lblMessaggioClassifica.ForeColor = Color.FromArgb(241, 196, 15);
+                lblMessaggioClassifica.Text = "⚠ Max 1 persona";
+                return;
+            }
+
+            int index = lstSalvataggi.SelectedIndices[0];
             if (index < 0 || index >= classifica.Count) return;
 
             Punteggio selezionato = classifica.Punteggi[index];
@@ -238,6 +300,9 @@ namespace SnakeForms
                         selezionato.Nome = nuovoNome;
                         SalvaClassifica();
                         CaricaListaSalvataggi();
+                        
+                        lblMessaggioClassifica.ForeColor = Color.FromArgb(46, 204, 113);
+                        lblMessaggioClassifica.Text = "✓ Modificato con successo";
                     }
                 }
             }
@@ -515,6 +580,42 @@ namespace SnakeForms
                 Rectangle r = new Rectangle(serpe[i].x * cell, serpe[i].y * cell, cell, cell);
                 g.FillRectangle(colSerpe, r);
             }
+
+            // FASE 3.5: Disegna OCCHI sulla testa del serpente (serpe[0])
+            if (lung > 0)
+            {
+                int headX = serpe[0].x * cell;
+                int headY = serpe[0].y * cell;
+                int eyeSize = 5; // Dimensione occhi quadrati
+                int eyeSpacing = 4; // Distanza dal bordo
+
+                // Determina colore occhi in base alla luminosità del serpente
+                Color serpeColor = ((SolidBrush)colSerpe).Color;
+                double luminosita = (0.299 * serpeColor.R + 0.587 * serpeColor.G + 0.114 * serpeColor.B) / 255;
+                Brush coloreOcchi = luminosita < 0.5 ? Brushes.White : Brushes.Black;
+
+                // Posiziona gli occhi in base alla direzione
+                if (verso == "destra")
+                {
+                    g.FillRectangle(coloreOcchi, headX + cell - eyeSpacing - eyeSize, headY + 3, eyeSize, eyeSize);
+                    g.FillRectangle(coloreOcchi, headX + cell - eyeSpacing - eyeSize, headY + 12, eyeSize, eyeSize);
+                }
+                else if (verso == "sinistra")
+                {
+                    g.FillRectangle(coloreOcchi, headX + eyeSpacing, headY + 3, eyeSize, eyeSize);
+                    g.FillRectangle(coloreOcchi, headX + eyeSpacing, headY + 12, eyeSize, eyeSize);
+                }
+                else if (verso == "su")
+                {
+                    g.FillRectangle(coloreOcchi, headX + 3, headY + eyeSpacing, eyeSize, eyeSize);
+                    g.FillRectangle(coloreOcchi, headX + 12, headY + eyeSpacing, eyeSize, eyeSize);
+                }
+                else if (verso == "giu")
+                {
+                    g.FillRectangle(coloreOcchi, headX + 3, headY + cell - eyeSpacing - eyeSize, eyeSize, eyeSize);
+                    g.FillRectangle(coloreOcchi, headX + 12, headY + cell - eyeSpacing - eyeSize, eyeSize, eyeSize);
+                }
+            }
             
             // FASE 4: Disegna OMBRA della mela
             Rectangle rOmbraMela = new Rectangle(cibo.x * cell + 2, cibo.y * cell + 2, cell, cell);
@@ -522,6 +623,21 @@ namespace SnakeForms
 
             // FASE 5: Disegna MELA (cibo)
             g.FillRectangle(Brushes.Red, new Rectangle(cibo.x * cell, cibo.y * cell, cell, cell));
+
+            // FASE 6: Disegna FOGLIA pixelata sopra la mela
+            int melaX = cibo.x * cell;
+            int melaY = cibo.y * cell;
+            using (Brush fogliaVerde = new SolidBrush(Color.FromArgb(46, 204, 113)))
+            using (Brush gamboMarrone = new SolidBrush(Color.FromArgb(139, 69, 19)))
+            {
+                // Gambo marrone
+                g.FillRectangle(gamboMarrone, melaX + 9, melaY - 3, 2, 3);
+                // Foglia pixelata più grande (6x4 pixel) in alto
+                g.FillRectangle(fogliaVerde, melaX + 11, melaY - 5, 3, 2);
+                g.FillRectangle(fogliaVerde, melaX + 14, melaY - 4, 3, 2);
+                g.FillRectangle(fogliaVerde, melaX + 11, melaY - 3, 3, 2);
+                g.FillRectangle(fogliaVerde, melaX + 8, melaY - 4, 3, 2);
+            }
         }
 
 

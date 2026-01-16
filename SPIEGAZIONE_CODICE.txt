@@ -141,6 +141,22 @@ Timer:
 - timerGioco : ogni X millisecondi muove il serpente (X dipende dalla difficoltà)
 - timerFPS   : ogni 16ms (~60 FPS) ridisegna lo schermo (animazione fluida)
 
+API Windows (DWM):
+------------------
+- DwmSetWindowAttribute: API nativa Windows per modificare attributi della finestra
+  * DWMWA_USE_IMMERSIVE_DARK_MODE: attiva tema scuro barra del titolo
+  * DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1: fallback per Windows 10 vecchie versioni
+  * Funziona su Windows 10 (20H1+) e Windows 11
+  * Rende la barra del titolo nera invece che bianca
+
+Metodi di inizializzazione:
+---------------------------
+- AbilitaTemaSc(): attiva il tema scuro della barra del titolo Windows
+- CreaIconaSerpe(): crea dinamicamente un'icona con emoji serpente 🐍
+  * Bitmap 32x32 pixel con sfondo trasparente
+  * Font "Segoe UI Emoji" per renderizzare l'emoji
+  * Converte in icona con Icon.FromHandle()
+
 ===============================================================================
 4. FLUSSO DI GIOCO COMPLETO (PASSO PASSO)
 ===============================================================================
@@ -263,9 +279,30 @@ Sequenza di disegno:
 3. Disegna SERPENTE con il colore scelto
    - Ogni segmento è un rettangolo di 20x20 pixel
 
+3.5 Disegna OCCHI sulla testa del serpente
+   - Due occhi quadrati (5x5 pixel) sulla testa (serpe[0])
+   - Posizione varia in base alla direzione del movimento:
+     * Destra: occhi sulla parte destra della testa
+     * Sinistra: occhi sulla parte sinistra
+     * Su: occhi sulla parte alta
+     * Giù: occhi sulla parte bassa
+   - Colore ADATTIVO: calcola luminosità del serpente
+     * Se colore serpente scuro (luminosità < 0.5) → occhi BIANCHI
+     * Se colore serpente chiaro (luminosità ≥ 0.5) → occhi NERI
+   - Formula luminosità: (0.299*R + 0.587*G + 0.114*B) / 255
+     (standard RGB luminosity formula)
+
 4. Disegna OMBRA della mela (stessa tecnica)
 
 5. Disegna MELA (rosso)
+
+6. Disegna FOGLIA E GAMBO sulla mela (dettagli pixelati)
+   - Gambo marrone (2x3 pixel) al centro sopra la mela
+   - Foglia verde pixelata (pattern 6x4 pixel) intorno al gambo
+   - Colori:
+     * Gambo: RGB(139, 69, 19) - marrone
+     * Foglia: RGB(46, 204, 113) - verde brillante
+   - Posizionamento: 3-5 pixel sopra il blocco rosso
 
 Conversione coordinate:
 - Coordinate logiche (griglia): serpe[0].x = 5, serpe[0].y = 3
@@ -340,6 +377,28 @@ Bottone indice 7:
 - X = 200 + 1 * 110 = 310
 - Y = 150 + 1 * 70 = 220
 
+5.6 - INTERFACCIA UTENTE E TEMA SCURO
+--------------------------------------
+Colori dell'interfaccia:
+- Sfondi menu: RGB(35, 35, 35) - grigio molto scuro
+- Bottoni punteggi: RGB(60, 60, 60) - grigio scuro
+- Hover bottoni: RGB(80, 80, 80) - grigio medio
+- Label info: RGB(50, 50, 50) - grigio scuro
+- Bottone impossibile: RGB(35, 35, 35) con bordo rosso
+- Testo: bianco per contrasto
+
+Tema scuro barra del titolo:
+- Usa API Windows DWM (Desktop Window Manager)
+- Richiede Windows 10 versione 20H1 o superiore, oppure Windows 11
+- Se fallisce su versioni vecchie, prova il fallback (BEFORE_20H1)
+- Rende la finestra completamente dark mode
+
+Icona dinamica:
+- Creata a runtime (non file .ico)
+- Usa emoji nativa del sistema operativo
+- Si adatta automaticamente alla risoluzione
+- Colore verde per richiamare il serpente del gioco
+
 ===============================================================================
 6. DOMANDE FREQUENTI E RISPOSTE
 ===============================================================================
@@ -364,6 +423,37 @@ Q: Perché ci sono due file Form1.cs e Form1.Designer.cs?
 A: Form1.Designer.cs contiene SOLO il codice auto-generato dal designer visuale.
    Form1.cs contiene la logica che scrivi tu.
    NON modificare mai manualmente il Designer.cs!
+
+Q: Come funziona il calcolo della luminosità per gli occhi adattivi?
+A: Usa la formula standard RGB luminosity:
+   luminosità = (0.299 × R + 0.587 × G + 0.114 × B) / 255
+   I coefficienti pesano di più il verde perché l'occhio umano è più sensibile.
+   Se luminosità < 0.5 (colore scuro) → occhi bianchi per contrasto.
+
+Q: Perché gli occhi cambiano posizione?
+A: Per dare l'illusione che il serpente guardi nella direzione del movimento!
+   È un dettaglio visivo che rende il gioco più "vivo" e piacevole.
+
+Q: Come è stata creata la foglia pixelata della mela?
+A: È composta da 4 rettangoli verdi (3x2 pixel ciascuno) disposti a croce,
+   più un gambo marrone centrale (2x3 pixel). Tutto posizionato sopra il
+   blocco rosso della mela per simulare una mela pixelata stile retro-gaming.
+
+Q: Come funziona la selezione multipla nella classifica?
+A: La ListBox usa SelectionMode.MultiExtended che permette:
+   - Click singolo: seleziona una persona
+   - Ctrl+Click: seleziona più persone una alla volta
+   - Shift+Click: seleziona un range di persone
+   Il bottone "Elimina" può eliminare più persone contemporaneamente,
+   il bottone "Modifica" funziona solo con 1 persona selezionata.
+
+Q: Cosa sono i messaggi di feedback nella classifica?
+A: Un label (lblMessaggioClassifica) sotto i bottoni mostra:
+   - "⚠ Max 1 persona" (giallo) se provi a modificare più di 1 persona
+   - "✓ Modificato con successo" (verde) dopo una modifica riuscita
+   - "✓ Eliminate con successo" (verde) dopo eliminazione
+   - "⚠ Seleziona una/almeno una persona" (rosso) se non selezioni nulla
+   Colori: rosso RGB(231,76,60), verde RGB(46,204,113), giallo RGB(241,196,15)
 
 ===============================================================================
 FINE SPIEGAZIONE
