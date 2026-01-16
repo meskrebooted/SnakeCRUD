@@ -21,7 +21,6 @@ Il progetto è composto da questi file principali:
 - Punteggio.cs       : Classe per salvare i punteggi (nome, punti, data, difficoltà)
 - Classifica.cs      : Gestisce l'array di punteggi (CRUD operations)
 - DoubleBufferedPanel.cs : Panel ottimizzato per evitare flickering
-- InserisciNomeForm.cs : Dialog per inserire/modificare il nome giocatore
 
 ===============================================================================
 2. COME FUNZIONA LA VISUALIZZAZIONE DELLE SCHERMATE
@@ -447,13 +446,15 @@ A: La ListBox usa SelectionMode.MultiExtended che permette:
    Il bottone "Elimina" può eliminare più persone contemporaneamente,
    il bottone "Modifica" funziona solo con 1 persona selezionata.
 
-Q: Cosa sono i messaggi di feedback nella classifica?
-A: Un label (lblMessaggioClassifica) sotto i bottoni mostra:
-   - "⚠ Max 1 persona" (giallo) se provi a modificare più di 1 persona
-   - "✓ Modificato con successo" (verde) dopo una modifica riuscita
-   - "✓ Eliminate con successo" (verde) dopo eliminazione
-   - "⚠ Seleziona una/almeno una persona" (rosso) se non selezioni nulla
-   Colori: rosso RGB(231,76,60), verde RGB(46,204,113), giallo RGB(241,196,15)
+Q: Come funziona la modifica del nome senza finestra dialogo?
+A: Invece di aprire InserisciNomeForm (finestra volante), quando clicchi "Modifica":
+   1. Appare una TextBox (txtModificaNome) e bottone "Conferma" nella stessa schermata
+   2. La TextBox viene precompilata col nome attuale
+   3. Il testo viene selezionato automaticamente per modificare velocemente
+   4. L'indice del punteggio viene salvato nel Tag della TextBox
+   5. Cliccando "Conferma" o premendo Enter, salva la modifica
+   6. TextBox e bottone scompaiono dopo la modifica
+   Questo rende l'interfaccia più fluida e integrata senza popup.
 
 ===============================================================================
 FINE SPIEGAZIONE

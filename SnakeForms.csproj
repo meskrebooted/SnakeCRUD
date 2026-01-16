@@ -54,9 +54,6 @@
     </Compile>
     <Compile Include="Microsoft\VisualBasic\Interaction.cs" />
     <Compile Include="Parte.cs" />
-    <Compile Include="InserisciNomeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classifica.cs" />

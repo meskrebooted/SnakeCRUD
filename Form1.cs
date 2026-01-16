@@ -236,6 +236,8 @@ namespace SnakeForms
                 lstSalvataggi.Items.Add(classifica.Punteggi[i]);
             }
             lblMessaggioClassifica.Text = "";
+            txtModificaNome.Visible = false;
+            btnConfermaModifica.Visible = false;
         }
 
         private void btnElimina_Click(object sender, EventArgs e)
@@ -288,23 +290,38 @@ namespace SnakeForms
             int index = lstSalvataggi.SelectedIndices[0];
             if (index < 0 || index >= classifica.Count) return;
 
-            Punteggio selezionato = classifica.Punteggi[index];
+            // Mostra la textbox e bottone per modificare
+            txtModificaNome.Text = classifica.Punteggi[index].Nome;
+            txtModificaNome.Visible = true;
+            txtModificaNome.Tag = index; // Salva l'indice nel Tag
+            btnConfermaModifica.Visible = true;
+            txtModificaNome.Focus();
+            txtModificaNome.SelectAll();
+            lblMessaggioClassifica.Text = "";
+        }
 
-            using (var frm = new InserisciNomeForm(selezionato.Nome))
+        private void btnConfermaModifica_Click(object sender, EventArgs e)
+        {
+            if (txtModificaNome.Tag == null) return;
+            
+            int index = (int)txtModificaNome.Tag;
+            string nuovoNome = txtModificaNome.Text.Trim();
+            
+            if (string.IsNullOrWhiteSpace(nuovoNome))
             {
-                if (frm.ShowDialog(this) == DialogResult.OK)
-                {
-                    string nuovoNome = frm.NomeGiocatore;
-                    if (!string.IsNullOrWhiteSpace(nuovoNome))
-                    {
-                        selezionato.Nome = nuovoNome;
-                        SalvaClassifica();
-                        CaricaListaSalvataggi();
-                        
-                        lblMessaggioClassifica.ForeColor = Color.FromArgb(46, 204, 113);
-                        lblMessaggioClassifica.Text = "✓ Modificato con successo";
-                    }
-                }
+                lblMessaggioClassifica.ForeColor = Color.FromArgb(231, 76, 60);
+                lblMessaggioClassifica.Text = "⚠ Il nome non può essere vuoto";
+                return;
+            }
+
+            if (index >= 0 && index < classifica.Count)
+            {
+                classifica.Punteggi[index].Nome = nuovoNome;
+                SalvaClassifica();
+                CaricaListaSalvataggi();
+                
+                lblMessaggioClassifica.ForeColor = Color.FromArgb(46, 204, 113);
+                lblMessaggioClassifica.Text = "✓ Modificato con successo";
             }
         }
 

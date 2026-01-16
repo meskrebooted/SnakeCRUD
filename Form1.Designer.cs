@@ -37,6 +37,8 @@
             this.txtNome = new System.Windows.Forms.TextBox();
             this.btnSalva = new System.Windows.Forms.Button();
             this.panelSalvataggi = new System.Windows.Forms.Panel();
+            this.txtModificaNome = new System.Windows.Forms.TextBox();
+            this.btnConfermaModifica = new System.Windows.Forms.Button();
             this.lblMessaggioClassifica = new System.Windows.Forms.Label();
             this.lstSalvataggi = new System.Windows.Forms.ListBox();
             this.btnEliminaSel = new System.Windows.Forms.Button();
@@ -325,6 +327,8 @@
             // panelSalvataggi
             // 
             this.panelSalvataggi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.panelSalvataggi.Controls.Add(this.txtModificaNome);
+            this.panelSalvataggi.Controls.Add(this.btnConfermaModifica);
             this.panelSalvataggi.Controls.Add(this.lblMessaggioClassifica);
             this.panelSalvataggi.Controls.Add(this.lstSalvataggi);
             this.panelSalvataggi.Controls.Add(this.btnEliminaSel);
@@ -337,12 +341,38 @@
             this.panelSalvataggi.TabIndex = 1;
             this.panelSalvataggi.Visible = false;
             // 
+            // txtModificaNome
+            // 
+            this.txtModificaNome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.txtModificaNome.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtModificaNome.Location = new System.Drawing.Point(150, 340);
+            this.txtModificaNome.Name = "txtModificaNome";
+            this.txtModificaNome.Size = new System.Drawing.Size(500, 29);
+            this.txtModificaNome.TabIndex = 5;
+            this.txtModificaNome.Visible = false;
+            // 
+            // btnConfermaModifica
+            // 
+            this.btnConfermaModifica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnConfermaModifica.FlatAppearance.BorderSize = 0;
+            this.btnConfermaModifica.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
+            this.btnConfermaModifica.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfermaModifica.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnConfermaModifica.ForeColor = System.Drawing.Color.White;
+            this.btnConfermaModifica.Location = new System.Drawing.Point(660, 340);
+            this.btnConfermaModifica.Name = "btnConfermaModifica";
+            this.btnConfermaModifica.Size = new System.Drawing.Size(190, 29);
+            this.btnConfermaModifica.TabIndex = 6;
+            this.btnConfermaModifica.Text = "✓ Conferma";
+            this.btnConfermaModifica.UseVisualStyleBackColor = false;
+            this.btnConfermaModifica.Visible = false;
+            this.btnConfermaModifica.Click += new System.EventHandler(this.btnConfermaModifica_Click);
             // 
             // lblMessaggioClassifica
             // 
             this.lblMessaggioClassifica.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.lblMessaggioClassifica.ForeColor = System.Drawing.Color.White;
-            this.lblMessaggioClassifica.Location = new System.Drawing.Point(150, 420);
+            this.lblMessaggioClassifica.Location = new System.Drawing.Point(150, 440);
             this.lblMessaggioClassifica.Name = "lblMessaggioClassifica";
             this.lblMessaggioClassifica.Size = new System.Drawing.Size(700, 30);
             this.lblMessaggioClassifica.TabIndex = 4;
@@ -369,7 +399,7 @@
             this.btnEliminaSel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminaSel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnEliminaSel.ForeColor = System.Drawing.Color.White;
-            this.btnEliminaSel.Location = new System.Drawing.Point(150, 360);
+            this.btnEliminaSel.Location = new System.Drawing.Point(150, 380);
             this.btnEliminaSel.Name = "btnEliminaSel";
             this.btnEliminaSel.Size = new System.Drawing.Size(200, 45);
             this.btnEliminaSel.TabIndex = 1;
@@ -385,7 +415,7 @@
             this.btnIndietro.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnIndietro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnIndietro.ForeColor = System.Drawing.Color.White;
-            this.btnIndietro.Location = new System.Drawing.Point(400, 360);
+            this.btnIndietro.Location = new System.Drawing.Point(400, 380);
             this.btnIndietro.Name = "btnIndietro";
             this.btnIndietro.Size = new System.Drawing.Size(200, 45);
             this.btnIndietro.TabIndex = 2;
@@ -401,7 +431,7 @@
             this.btnModificaSel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificaSel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnModificaSel.ForeColor = System.Drawing.Color.White;
-            this.btnModificaSel.Location = new System.Drawing.Point(650, 360);
+            this.btnModificaSel.Location = new System.Drawing.Point(650, 380);
             this.btnModificaSel.Name = "btnModificaSel";
             this.btnModificaSel.Size = new System.Drawing.Size(200, 45);
             this.btnModificaSel.TabIndex = 3;
@@ -466,6 +496,8 @@
         private System.Windows.Forms.Button btnEliminaSel;
         private System.Windows.Forms.Button btnIndietro;
         private System.Windows.Forms.Button btnModificaSel;
+        private System.Windows.Forms.TextBox txtModificaNome;
+        private System.Windows.Forms.Button btnConfermaModifica;
         private System.Windows.Forms.Label lblMessaggioClassifica;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTitolo;

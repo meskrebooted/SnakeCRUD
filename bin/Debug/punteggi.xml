@@ -52,7 +52,7 @@
       <Data>2026-01-15T11:41:01.964528+01:00</Data>
     </Punteggio>
     <Punteggio>
-      <Nome>Anonimo</Nome>
+      <Nome>mesk</Nome>
       <Punti>1</Punti>
       <Data>2026-01-15T13:28:07.1879905+01:00</Data>
     </Punteggio>
@@ -234,8 +234,14 @@
     </Punteggio>
     <Punteggio>
       <Nome>Anonimo</Nome>
-      <Punti>3</Punti>
-      <Data>2026-01-16T11:04:38.5872533+01:00</Data>
+      <Punti>5</Punti>
+      <Data>2026-01-16T11:12:34.1218914+01:00</Data>
+      <Difficolta>Difficile</Difficolta>
+    </Punteggio>
+    <Punteggio>
+      <Nome>Anonimo</Nome>
+      <Punti>6</Punti>
+      <Data>2026-01-16T11:13:08.1184936+01:00</Data>
       <Difficolta>Facile</Difficolta>
     </Punteggio>
     <Punteggio xsi:nil="true" />
@@ -295,7 +301,6 @@
     <Punteggio xsi:nil="true" />
     <Punteggio xsi:nil="true" />
     <Punteggio xsi:nil="true" />
-    <Punteggio xsi:nil="true" />
   </Punteggi>
-  <Count>41</Count>
+  <Count>43</Count>
 </Classifica>
