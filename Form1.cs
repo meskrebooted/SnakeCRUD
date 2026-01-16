@@ -19,12 +19,11 @@ namespace SnakeForms
         string verso = "destra";
         Random caso = new Random();
         Brush colSerpe = Brushes.Green;
+        string difficoltaScelta = "Normale";
 
         // Classifica (array)
         Classifica classifica = new Classifica();
         string fileClassifica = "punteggi.xml";
-
-        bool coloreAperto = false;
 
         public Form1()
         {
@@ -34,6 +33,63 @@ namespace SnakeForms
             timerFPS.Interval = 16; // ~60 FPS 
             timerFPS.Tick += (s, e) => panelGame.Invalidate();
             timerFPS.Start();
+            CreaBottoniColore();
+        }
+
+        private void CreaBottoniColore()
+        {
+            // Array di 36 colori ordinati per spettro RGB (arcobaleno)
+            Color[] colori = new Color[]
+            {
+                Color.Red, Color.Crimson, Color.OrangeRed, Color.DarkRed,
+                Color.Orange, Color.DarkOrange, Color.Coral, Color.Tomato,
+                Color.Yellow, Color.Gold, Color.Orange, Color.Goldenrod,
+                Color.GreenYellow, Color.Lime, Color.LimeGreen, Color.Green,
+                Color.DarkGreen, Color.ForestGreen, Color.SeaGreen, Color.Teal,
+                Color.Cyan, Color.Aqua, Color.Turquoise, Color.DeepSkyBlue,
+                Color.Blue, Color.DodgerBlue, Color.RoyalBlue, Color.Navy,
+                Color.Indigo, Color.Purple, Color.BlueViolet, Color.DarkViolet,
+                Color.Magenta, Color.Violet, Color.Orchid, Color.Pink
+            };
+
+            int startX = 200;
+            int startY = 150;
+            int btnWidth = 100;
+            int btnHeight = 60;
+            int spacing = 10;
+            int colonne = 6;
+
+            // Crea dinamicamente 36 bottoni disposti in griglia (6 colonne)
+            for (int i = 0; i < colori.Length; i++)
+            {
+                Button btn = new Button
+                {
+                    BackColor = colori[i],
+                    FlatStyle = FlatStyle.Flat,
+                    Width = btnWidth,
+                    Height = btnHeight,
+                    // Calcolo posizione in griglia: X = colonna, Y = riga
+                    Left = startX + (i % colonne) * (btnWidth + spacing),  // i%6 = colonna (0-5)
+                    Top = startY + (i / colonne) * (btnHeight + spacing),  // i/6 = riga (0-5)
+                    Cursor = Cursors.Hand
+                };
+                btn.FlatAppearance.BorderSize = 3;
+                btn.FlatAppearance.BorderColor = Color.White;
+                btn.Click += BtnColoreEGioca_Click;  // Tutti i bottoni chiamano la stessa funzione
+                panelScegliColore.Controls.Add(btn);
+            }
+        }
+
+        // Quando clicchi un colore: salva il colore e avvia il gioco
+        private void BtnColoreEGioca_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn != null)
+            {
+                colSerpe = new SolidBrush(btn.BackColor);
+            }
+            MostraGioco();
+            AvviaGioco();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -44,20 +100,46 @@ namespace SnakeForms
         }
 
         // ----- UI switching -----
+        // Queste funzioni controllano quale schermata è visibile.
+        // Solo UN pannello principale è visibile alla volta (Dock=Fill, come fogli impilati)
         private void MostraMenu()
         {
             panelMenu.Visible = true;
             panelGame.Visible = false;
             panelInfoLaterale.Visible = false;
             panelSalvataggi.Visible = false;
+            panelDifficolta.Visible = false;
+            panelScegliColore.Visible = false;
+        }
+
+        private void MostraDifficolta()
+        {
+            panelMenu.Visible = false;
+            panelGame.Visible = false;
+            panelInfoLaterale.Visible = false;
+            panelSalvataggi.Visible = false;
+            panelDifficolta.Visible = true;
+            panelScegliColore.Visible = false;
+        }
+
+        private void MostraScegliColore()
+        {
+            panelMenu.Visible = false;
+            panelGame.Visible = false;
+            panelInfoLaterale.Visible = false;
+            panelSalvataggi.Visible = false;
+            panelDifficolta.Visible = false;
+            panelScegliColore.Visible = true;
         }
 
         private void MostraGioco()
         {
             panelMenu.Visible = false;
             panelGame.Visible = true;
-            panelInfoLaterale.Visible = true;
+            panelInfoLaterale.Visible = true;  // Pannello laterale con info
             panelSalvataggi.Visible = false;
+            panelDifficolta.Visible = false;
+            panelScegliColore.Visible = false;
         }
 
         private void MostraSalvataggi()
@@ -66,26 +148,41 @@ namespace SnakeForms
             panelGame.Visible = false;
             panelInfoLaterale.Visible = false;
             panelSalvataggi.Visible = true;
+            panelDifficolta.Visible = false;
+            panelScegliColore.Visible = false;
             CaricaListaSalvataggi();
         }
 
         // ----- Bottoni menu -----
         private void btnGioca_Click(object sender, EventArgs e)
         {
-            if (!coloreAperto)
-            {
-                using (ColorDialog dlg = new ColorDialog())
-                {
-                    dlg.Color = Color.Green;
-                    dlg.FullOpen = true;
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                        colSerpe = new SolidBrush(dlg.Color);
-                }
-                coloreAperto = true;
-            }
+            MostraDifficolta();
+        }
 
-            MostraGioco();
-            AvviaGioco();
+        private void btnDifficolta_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn == btnFacile)
+            {
+                difficoltaScelta = "Facile";
+                timerGioco.Interval = 150;
+            }
+            else if (btn == btnNormale)
+            {
+                difficoltaScelta = "Normale";
+                timerGioco.Interval = 100;
+            }
+            else if (btn == btnDifficile)
+            {
+                difficoltaScelta = "Difficile";
+                timerGioco.Interval = 50;
+            }
+            else if (btn == btnImpossibile)
+            {
+                difficoltaScelta = "Impossibile";
+                timerGioco.Interval = 15;
+            }
+            MostraScegliColore();
         }
 
         private void btnModifica_Click(object sender, EventArgs e)
@@ -211,7 +308,7 @@ namespace SnakeForms
             AggiornaGriglia();
             CreaCibo();
 
-            timerGioco.Interval = 120;
+            // L'intervallo è già stato impostato in btnDifficolta_Click
             timerGioco.Start();
             panelGame.Invalidate();
         }
@@ -230,12 +327,15 @@ namespace SnakeForms
 
         private void MuoviSerpe()
         {
+            // FASE 1: Sposta tutti i segmenti (dal fondo verso la testa)
+            // Ogni segmento prende la posizione del segmento davanti a lui
             for (int i = lung - 1; i > 0; i--)
             {
                 serpe[i].x = serpe[i - 1].x;
                 serpe[i].y = serpe[i - 1].y;
             }
 
+            // FASE 2: Muovi la testa nella direzione corrente
             switch (verso)
             {
                 case "sinistra": serpe[0].x--; break;
@@ -244,6 +344,7 @@ namespace SnakeForms
                 case "giu": serpe[0].y++; break;
             }
 
+            // FASE 3: Controlla collisione con i MURI (fuori dalla griglia)
             if (serpe[0].x < 0 || serpe[0].y < 0 ||
                 serpe[0].x >= larghMax || serpe[0].y >= altMax)
             {
@@ -251,6 +352,8 @@ namespace SnakeForms
                 return;
             }
 
+            // FASE 4: Controlla collisione con SE STESSO
+            // Controlla se la testa (serpe[0]) tocca qualsiasi altro segmento
             for (int i = 1; i < lung; i++)
             {
                 if (serpe[0].x == serpe[i].x && serpe[0].y == serpe[i].y)
@@ -260,8 +363,10 @@ namespace SnakeForms
                 }
             }
 
+            // FASE 5: Controlla se ha MANGIATO IL CIBO
             if (serpe[0].x == cibo.x && serpe[0].y == cibo.y)
             {
+                // Aggiungi un nuovo segmento in fondo al serpente
                 if (lung < serpe.Length)
                 {
                     serpe[lung] = new Parte
@@ -274,7 +379,7 @@ namespace SnakeForms
 
                 punti++;
                 lblPunti.Text = "Punti: " + punti;
-                CreaCibo();
+                CreaCibo();  // Genera nuovo cibo in posizione random
             }
         }
 
@@ -297,7 +402,8 @@ namespace SnakeForms
             {
                 Nome = nome,
                 Punti = punti,
-                Data = DateTime.Now
+                Data = DateTime.Now,
+                Difficolta = difficoltaScelta
             };
 
             classifica.Aggiungi(p);
@@ -315,41 +421,35 @@ namespace SnakeForms
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            // Se sto scrivendo il nome, NON permettere P o O
+            // Se sto scrivendo il nome, NON intercettare i tasti P e O
             if (txtNome.Visible && txtNome.Focused)
             {
-                // Permetti solo lettere, numeri, backspace ecc.
                 return;
             }
 
             // Se siamo nel gioco
             if (panelGame.Visible)
             {
-                // Tasto P = apri salvataggi SOLO se non sto scrivendo
+                // Tasto P = torna al menu principale
                 if (e.KeyCode == Keys.P)
                 {
                     timerGioco.Stop();
-                    MostraSalvataggi();
+                    MostraMenu();
                     return;
                 }
 
-                // Tasto O = cambia colore SOLO se non sto scrivendo
+                // Tasto O = cambia colore (riapre selezione colori)
                 if (e.KeyCode == Keys.O)
                 {
                     timerGioco.Stop();
-                    using (ColorDialog dlg = new ColorDialog())
-                    {
-                        dlg.Color = Color.Green;
-                        dlg.FullOpen = true;
-                        if (dlg.ShowDialog() == DialogResult.OK)
-                            colSerpe = new SolidBrush(dlg.Color);
-                    }
-                    timerGioco.Start();
+                    MostraScegliColore();
                     return;
                 }
 
 
                 // --- Controlli movimento serpente ---
+                // IMPORTANTE: impedisce di tornare indietro su se stesso!
+                // Esempio: se vai a destra, NON puoi andare subito a sinistra
                 switch (e.KeyCode)
                 {
                     case Keys.Left:
@@ -381,17 +481,18 @@ namespace SnakeForms
         private void panelGame_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            int cell = 20;
+            int cell = 20;  // Dimensione di ogni cella in pixel
 
-            // Colori esatti dall'immagine
-            Color verdeChiaro = ColorTranslator.FromHtml("#aad751"); // RGB(168, 221, 168)
-            Color verdeScuro = ColorTranslator.FromHtml("#a2d149");  // RGB(109, 168, 109)
+            // Colori dello sfondo a scacchiera (stile Game Boy)
+            Color verdeChiaro = ColorTranslator.FromHtml("#aad751");
+            Color verdeScuro = ColorTranslator.FromHtml("#a2d149");
 
-            // Sfondo checkerboard
+            // FASE 1: Disegna sfondo a scacchiera
             for (int y = 0; y < altMax; y++)
             {
                 for (int x = 0; x < larghMax; x++)
                 {
+                    // Checkerboard: (x+y) pari = chiaro, dispari = scuro
                     bool pari = (x + y) % 2 == 0;
                     using (Brush sfondo = new SolidBrush(pari ? verdeChiaro : verdeScuro))
                     {
@@ -400,26 +501,26 @@ namespace SnakeForms
                 }
             }
 
-            // Ombra serpente
+            // FASE 2: Disegna OMBRA del serpente (effetto 3D semplice)
+            // L'ombra è spostata di +2 pixel a destra e in basso
             for (int i = 0; i < lung; i++)
             {
                 Rectangle rOmbra = new Rectangle(serpe[i].x * cell + 2, serpe[i].y * cell + 2, cell, cell);
                 g.FillRectangle(Brushes.Black, rOmbra);
             }
 
-            // Serpente
+            // FASE 3: Disegna SERPENTE con il colore scelto
             for (int i = 0; i < lung; i++)
             {
                 Rectangle r = new Rectangle(serpe[i].x * cell, serpe[i].y * cell, cell, cell);
                 g.FillRectangle(colSerpe, r);
             }
-            // Ombra mela
+            
+            // FASE 4: Disegna OMBRA della mela
             Rectangle rOmbraMela = new Rectangle(cibo.x * cell + 2, cibo.y * cell + 2, cell, cell);
             g.FillRectangle(Brushes.Black, rOmbraMela);
 
-          
-
-            // Mela
+            // FASE 5: Disegna MELA (cibo)
             g.FillRectangle(Brushes.Red, new Rectangle(cibo.x * cell, cibo.y * cell, cell, cell));
         }
 

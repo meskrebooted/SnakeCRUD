@@ -22,6 +22,14 @@
             this.btnGioca = new System.Windows.Forms.Button();
             this.btnModifica = new System.Windows.Forms.Button();
             this.btnEsci = new System.Windows.Forms.Button();
+            this.panelDifficolta = new System.Windows.Forms.Panel();
+            this.lblScegliDifficolta = new System.Windows.Forms.Label();
+            this.btnFacile = new System.Windows.Forms.Button();
+            this.btnNormale = new System.Windows.Forms.Button();
+            this.btnDifficile = new System.Windows.Forms.Button();
+            this.btnImpossibile = new System.Windows.Forms.Button();
+            this.panelScegliColore = new System.Windows.Forms.Panel();
+            this.lblScegliColore = new System.Windows.Forms.Label();
             this.panelInfoLaterale = new System.Windows.Forms.Panel();
             this.lblPunti = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -35,6 +43,8 @@
             this.btnModificaSel = new System.Windows.Forms.Button();
             this.panelGame = new SnakeForms.DoubleBufferedPanel();
             this.panelMenu.SuspendLayout();
+            this.panelDifficolta.SuspendLayout();
+            this.panelScegliColore.SuspendLayout();
             this.panelInfoLaterale.SuspendLayout();
             this.panelSalvataggi.SuspendLayout();
             this.SuspendLayout();
@@ -118,6 +128,119 @@
             this.btnEsci.UseVisualStyleBackColor = false;
             this.btnEsci.Click += new System.EventHandler(this.btnEsci_Click);
             // 
+            // panelDifficolta
+            // 
+            this.panelDifficolta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.panelDifficolta.Controls.Add(this.lblScegliDifficolta);
+            this.panelDifficolta.Controls.Add(this.btnFacile);
+            this.panelDifficolta.Controls.Add(this.btnNormale);
+            this.panelDifficolta.Controls.Add(this.btnDifficile);
+            this.panelDifficolta.Controls.Add(this.btnImpossibile);
+            this.panelDifficolta.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDifficolta.Location = new System.Drawing.Point(0, 0);
+            this.panelDifficolta.Name = "panelDifficolta";
+            this.panelDifficolta.Size = new System.Drawing.Size(1000, 600);
+            this.panelDifficolta.TabIndex = 7;
+            this.panelDifficolta.Visible = false;
+            // 
+            // lblScegliDifficolta
+            // 
+            this.lblScegliDifficolta.AutoSize = true;
+            this.lblScegliDifficolta.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold);
+            this.lblScegliDifficolta.ForeColor = System.Drawing.Color.White;
+            this.lblScegliDifficolta.Location = new System.Drawing.Point(280, 80);
+            this.lblScegliDifficolta.Name = "lblScegliDifficolta";
+            this.lblScegliDifficolta.Size = new System.Drawing.Size(457, 59);
+            this.lblScegliDifficolta.TabIndex = 0;
+            this.lblScegliDifficolta.Text = "⚡ Scegli la difficoltà";
+            // 
+            // btnFacile
+            // 
+            this.btnFacile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnFacile.FlatAppearance.BorderSize = 0;
+            this.btnFacile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
+            this.btnFacile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFacile.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.btnFacile.ForeColor = System.Drawing.Color.White;
+            this.btnFacile.Location = new System.Drawing.Point(320, 160);
+            this.btnFacile.Name = "btnFacile";
+            this.btnFacile.Size = new System.Drawing.Size(360, 70);
+            this.btnFacile.TabIndex = 1;
+            this.btnFacile.Text = "😊 FACILE (1x)";
+            this.btnFacile.UseVisualStyleBackColor = false;
+            this.btnFacile.Click += new System.EventHandler(this.btnDifficolta_Click);
+            // 
+            // btnNormale
+            // 
+            this.btnNormale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(196)))), ((int)(((byte)(15)))));
+            this.btnNormale.FlatAppearance.BorderSize = 0;
+            this.btnNormale.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(156)))), ((int)(((byte)(18)))));
+            this.btnNormale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNormale.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.btnNormale.ForeColor = System.Drawing.Color.White;
+            this.btnNormale.Location = new System.Drawing.Point(320, 245);
+            this.btnNormale.Name = "btnNormale";
+            this.btnNormale.Size = new System.Drawing.Size(360, 70);
+            this.btnNormale.TabIndex = 2;
+            this.btnNormale.Text = "😐 NORMALE (2x)";
+            this.btnNormale.UseVisualStyleBackColor = false;
+            this.btnNormale.Click += new System.EventHandler(this.btnDifficolta_Click);
+            // 
+            // btnDifficile
+            // 
+            this.btnDifficile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
+            this.btnDifficile.FlatAppearance.BorderSize = 0;
+            this.btnDifficile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
+            this.btnDifficile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDifficile.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.btnDifficile.ForeColor = System.Drawing.Color.White;
+            this.btnDifficile.Location = new System.Drawing.Point(320, 330);
+            this.btnDifficile.Name = "btnDifficile";
+            this.btnDifficile.Size = new System.Drawing.Size(360, 70);
+            this.btnDifficile.TabIndex = 3;
+            this.btnDifficile.Text = "😈 DIFFICILE (3x)";
+            this.btnDifficile.UseVisualStyleBackColor = false;
+            this.btnDifficile.Click += new System.EventHandler(this.btnDifficolta_Click);
+            // 
+            // btnImpossibile
+            // 
+            this.btnImpossibile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.btnImpossibile.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.btnImpossibile.FlatAppearance.BorderSize = 3;
+            this.btnImpossibile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.btnImpossibile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImpossibile.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.btnImpossibile.ForeColor = System.Drawing.Color.Red;
+            this.btnImpossibile.Location = new System.Drawing.Point(320, 415);
+            this.btnImpossibile.Name = "btnImpossibile";
+            this.btnImpossibile.Size = new System.Drawing.Size(360, 70);
+            this.btnImpossibile.TabIndex = 4;
+            this.btnImpossibile.Text = "😱 IMPOSSIBILE (6.7x)";
+            this.btnImpossibile.UseVisualStyleBackColor = false;
+            this.btnImpossibile.Click += new System.EventHandler(this.btnDifficolta_Click);
+            // 
+            // panelScegliColore
+            // 
+            this.panelScegliColore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.panelScegliColore.Controls.Add(this.lblScegliColore);
+            this.panelScegliColore.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelScegliColore.Location = new System.Drawing.Point(0, 0);
+            this.panelScegliColore.Name = "panelScegliColore";
+            this.panelScegliColore.Size = new System.Drawing.Size(1000, 600);
+            this.panelScegliColore.TabIndex = 6;
+            this.panelScegliColore.Visible = false;
+            // 
+            // lblScegliColore
+            // 
+            this.lblScegliColore.AutoSize = true;
+            this.lblScegliColore.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Bold);
+            this.lblScegliColore.ForeColor = System.Drawing.Color.White;
+            this.lblScegliColore.Location = new System.Drawing.Point(300, 50);
+            this.lblScegliColore.Name = "lblScegliColore";
+            this.lblScegliColore.Size = new System.Drawing.Size(415, 51);
+            this.lblScegliColore.TabIndex = 0;
+            this.lblScegliColore.Text = "🎨 Scegli il tuo colore";
+            // 
             // panelInfoLaterale
             // 
             this.panelInfoLaterale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
@@ -151,10 +274,10 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(10, 60);
             this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.label1.Padding = new System.Windows.Forms.Padding(10);
             this.label1.Size = new System.Drawing.Size(180, 70);
             this.label1.TabIndex = 4;
-            this.label1.Text = "P - Abbandona\r\nO - Cambia colore";
+            this.label1.Text = "P - Torna al menu\r\nO - Cambia colore";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblEsito
@@ -164,10 +287,9 @@
             this.lblEsito.ForeColor = System.Drawing.Color.White;
             this.lblEsito.Location = new System.Drawing.Point(10, 150);
             this.lblEsito.Name = "lblEsito";
-            this.lblEsito.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.lblEsito.Padding = new System.Windows.Forms.Padding(5);
             this.lblEsito.Size = new System.Drawing.Size(180, 70);
             this.lblEsito.TabIndex = 1;
-            this.lblEsito.Text = "";
             this.lblEsito.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblEsito.Visible = false;
             // 
@@ -179,8 +301,6 @@
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(180, 25);
             this.txtNome.TabIndex = 2;
-            this.txtNome.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtNome.Visible = false;
             this.txtNome.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtNome.Visible = false;
             // 
@@ -292,6 +412,8 @@
             this.Controls.Add(this.panelGame);
             this.Controls.Add(this.panelInfoLaterale);
             this.Controls.Add(this.panelSalvataggi);
+            this.Controls.Add(this.panelDifficolta);
+            this.Controls.Add(this.panelScegliColore);
             this.Controls.Add(this.panelMenu);
             this.KeyPreview = true;
             this.Name = "Form1";
@@ -300,6 +422,10 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
+            this.panelDifficolta.ResumeLayout(false);
+            this.panelDifficolta.PerformLayout();
+            this.panelScegliColore.ResumeLayout(false);
+            this.panelScegliColore.PerformLayout();
             this.panelInfoLaterale.ResumeLayout(false);
             this.panelInfoLaterale.PerformLayout();
             this.panelSalvataggi.ResumeLayout(false);
@@ -327,5 +453,13 @@
         private System.Windows.Forms.Button btnModificaSel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTitolo;
+        private System.Windows.Forms.Panel panelDifficolta;
+        private System.Windows.Forms.Label lblScegliDifficolta;
+        private System.Windows.Forms.Button btnFacile;
+        private System.Windows.Forms.Button btnNormale;
+        private System.Windows.Forms.Button btnDifficile;
+        private System.Windows.Forms.Button btnImpossibile;
+        private System.Windows.Forms.Panel panelScegliColore;
+        private System.Windows.Forms.Label lblScegliColore;
     }
 }
