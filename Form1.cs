@@ -31,6 +31,7 @@ namespace SnakeForms
         // Classifica (array)
         Classifica classifica = new Classifica();
         string fileClassifica = "punteggi.xml";
+        bool confermaEliminazioneZero = false;
 
         public Form1()
         {
@@ -238,6 +239,9 @@ namespace SnakeForms
             lblMessaggioClassifica.Text = "";
             txtModificaNome.Visible = false;
             btnConfermaModifica.Visible = false;
+            confermaEliminazioneZero = false;
+            btnEliminaZeroPunti.Text = "🗑️ Elimina Tutti con 0 Punti";
+            btnEliminaZeroPunti.BackColor = Color.FromArgb(155, 89, 182);
         }
 
         private void btnElimina_Click(object sender, EventArgs e)
@@ -325,6 +329,52 @@ namespace SnakeForms
             }
         }
 
+        private void btnEliminaZeroPunti_Click(object sender, EventArgs e)
+        {
+            if (!confermaEliminazioneZero)
+            {
+                // Prima click: chiedi conferma
+                int conteggioZero = 0;
+                for (int i = 0; i < classifica.Count; i++)
+                {
+                    if (classifica.Punteggi[i].Punti == 0)
+                        conteggioZero++;
+                }
+
+                if (conteggioZero == 0)
+                {
+                    lblMessaggioClassifica.ForeColor = Color.FromArgb(241, 196, 15);
+                    lblMessaggioClassifica.Text = "⚠ Nessuna persona con 0 punti da eliminare";
+                    return;
+                }
+
+                confermaEliminazioneZero = true;
+                btnEliminaZeroPunti.Text = $"⚠️ CONFERMA: Elimina {conteggioZero} persona/e?";
+                btnEliminaZeroPunti.BackColor = Color.FromArgb(231, 76, 60);
+                lblMessaggioClassifica.ForeColor = Color.FromArgb(241, 196, 15);
+                lblMessaggioClassifica.Text = "⚠ Ripremi per confermare l'eliminazione";
+            }
+            else
+            {
+                // Secondo click: elimina
+                int eliminati = 0;
+                for (int i = classifica.Count - 1; i >= 0; i--)
+                {
+                    if (classifica.Punteggi[i].Punti == 0)
+                    {
+                        classifica.Elimina(i);
+                        eliminati++;
+                    }
+                }
+
+                SalvaClassifica();
+                CaricaListaSalvataggi();
+
+                lblMessaggioClassifica.ForeColor = Color.FromArgb(46, 204, 113);
+                lblMessaggioClassifica.Text = $"✓ Eliminate {eliminati} persona/e con 0 punti";
+            }
+        }
+
         // ----- Persistenza XML -----
 
         private void SalvaClassifica()
@@ -387,12 +437,34 @@ namespace SnakeForms
             txtNome.Text = "Inserisci nome";
             btnSalva.Visible = false;
 
+            AggiornaHighScore();
             AggiornaGriglia();
             CreaCibo();
 
             // L'intervallo è già stato impostato in btnDifficolta_Click
             timerGioco.Start();
             panelGame.Invalidate();
+        }
+
+        private void AggiornaHighScore()
+        {
+            int maxPunti = 0;
+            string nomeRecord = "Nessuno";
+
+            // Trova il punteggio più alto per la difficoltà corrente
+            for (int i = 0; i < classifica.Count; i++)
+            {
+                if (classifica.Punteggi[i].Difficolta == difficoltaScelta)
+                {
+                    if (classifica.Punteggi[i].Punti > maxPunti)
+                    {
+                        maxPunti = classifica.Punteggi[i].Punti;
+                        nomeRecord = classifica.Punteggi[i].Nome;
+                    }
+                }
+            }
+
+            lblHighScore.Text = $"🏆 Record\n{maxPunti} punti\n{nomeRecord}";
         }
 
         private void CreaCibo()

@@ -456,6 +456,48 @@ A: Invece di aprire InserisciNomeForm (finestra volante), quando clicchi "Modifi
    6. TextBox e bottone scompaiono dopo la modifica
    Questo rende l'interfaccia più fluida e integrata senza popup.
 
+Q: Come funziona l'eliminazione batch di tutti con 0 punti?
+A: È implementato un sistema di conferma a 2 click per sicurezza:
+   1. PRIMO CLICK su "Elimina Tutti con 0 Punti":
+      - Conta quante persone hanno 0 punti
+      - Se zero: mostra messaggio "Nessuna persona con 0 punti"
+      - Se trovate: il bottone diventa ROSSO e chiede conferma
+      - Testo cambia in: "⚠️ CONFERMA: Elimina X persona/e?"
+      - Messaggio di warning: "Ripremi per confermare l'eliminazione"
+   2. SECONDO CLICK (conferma):
+      - Esegue l'eliminazione scorrendo la classifica dalla fine all'inizio
+      - Elimina tutti i Punteggio con Punti == 0
+      - Salva le modifiche nel file XML
+      - Mostra messaggio di successo verde: "✓ Eliminate X persona/e"
+      - Resetta il bottone (colore viola, testo originale)
+   3. RESET AUTOMATICO:
+      - Ogni volta che carichi la lista (CaricaListaSalvataggi)
+      - Il flag confermaEliminazioneZero viene azzerato
+      - Il bottone torna allo stato iniziale
+   Questo previene cancellazioni accidentali e fornisce feedback chiaro all'utente.
+
+Q: Come funziona la visualizzazione dell'highscore nella barra laterale?
+A: Durante il gioco, nella barra laterale (panelInfoLaterale) viene mostrato
+   il record per la difficoltà corrente:
+   1. Metodo AggiornaHighScore():
+      - Scansiona tutta la classifica cercando punteggi con difficoltà corrente
+      - Trova il punteggio massimo e il nome associato
+      - Aggiorna lblHighScore con: "🏆 Record\nX punti\nNome"
+   2. Quando viene chiamato:
+      - All'inizio di ogni nuova partita (in AvviaGioco)
+      - Dopo aver scelto colore e prima di far partire il timer
+   3. Design della label:
+      - Sfondo grigio scuro: RGB(50, 50, 50)
+      - Testo giallo oro: RGB(241, 196, 15) per risaltare
+      - Posizione: tra i comandi (P/O) e il messaggio di fine partita
+      - Dimensioni: 180x80 pixel con padding
+   4. Vantaggio:
+      - Fornisce motivazione: "Devo battere quel punteggio!"
+      - Feedback contestuale: ogni difficoltà ha il suo record
+      - Non serve aprire la classifica completa durante il gioco
+   Se non ci sono ancora punteggi per quella difficoltà, mostra:
+   "🏆 Record\n0 punti\nNessuno"
+
 ===============================================================================
 FINE SPIEGAZIONE
 ===============================================================================

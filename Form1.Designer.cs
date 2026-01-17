@@ -32,6 +32,7 @@
             this.lblScegliColore = new System.Windows.Forms.Label();
             this.panelInfoLaterale = new System.Windows.Forms.Panel();
             this.lblPunti = new System.Windows.Forms.Label();
+            this.lblHighScore = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lblEsito = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
@@ -44,6 +45,7 @@
             this.btnEliminaSel = new System.Windows.Forms.Button();
             this.btnIndietro = new System.Windows.Forms.Button();
             this.btnModificaSel = new System.Windows.Forms.Button();
+            this.btnEliminaZeroPunti = new System.Windows.Forms.Button();
             this.panelGame = new SnakeForms.DoubleBufferedPanel();
             this.panelMenu.SuspendLayout();
             this.panelDifficolta.SuspendLayout();
@@ -248,6 +250,7 @@
             // 
             this.panelInfoLaterale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.panelInfoLaterale.Controls.Add(this.lblPunti);
+            this.panelInfoLaterale.Controls.Add(this.lblHighScore);
             this.panelInfoLaterale.Controls.Add(this.label1);
             this.panelInfoLaterale.Controls.Add(this.lblEsito);
             this.panelInfoLaterale.Controls.Add(this.txtNome);
@@ -270,6 +273,19 @@
             this.lblPunti.Text = "Punti: 0";
             this.lblPunti.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblHighScore
+            // 
+            this.lblHighScore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.lblHighScore.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblHighScore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(196)))), ((int)(((byte)(15)))));
+            this.lblHighScore.Location = new System.Drawing.Point(10, 140);
+            this.lblHighScore.Name = "lblHighScore";
+            this.lblHighScore.Padding = new System.Windows.Forms.Padding(10);
+            this.lblHighScore.Size = new System.Drawing.Size(180, 80);
+            this.lblHighScore.TabIndex = 5;
+            this.lblHighScore.Text = "🏆 Record\r\n0\r\nNessuno";
+            this.lblHighScore.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label1
             // 
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
@@ -288,7 +304,7 @@
             this.lblEsito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
             this.lblEsito.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblEsito.ForeColor = System.Drawing.Color.White;
-            this.lblEsito.Location = new System.Drawing.Point(10, 150);
+            this.lblEsito.Location = new System.Drawing.Point(10, 230);
             this.lblEsito.Name = "lblEsito";
             this.lblEsito.Padding = new System.Windows.Forms.Padding(5);
             this.lblEsito.Size = new System.Drawing.Size(180, 70);
@@ -300,7 +316,7 @@
             // 
             this.txtNome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
             this.txtNome.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtNome.Location = new System.Drawing.Point(10, 230);
+            this.txtNome.Location = new System.Drawing.Point(10, 310);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(180, 25);
             this.txtNome.TabIndex = 2;
@@ -315,7 +331,7 @@
             this.btnSalva.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSalva.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnSalva.ForeColor = System.Drawing.Color.White;
-            this.btnSalva.Location = new System.Drawing.Point(10, 265);
+            this.btnSalva.Location = new System.Drawing.Point(10, 345);
             this.btnSalva.Name = "btnSalva";
             this.btnSalva.Size = new System.Drawing.Size(180, 35);
             this.btnSalva.TabIndex = 3;
@@ -334,6 +350,7 @@
             this.panelSalvataggi.Controls.Add(this.btnEliminaSel);
             this.panelSalvataggi.Controls.Add(this.btnIndietro);
             this.panelSalvataggi.Controls.Add(this.btnModificaSel);
+            this.panelSalvataggi.Controls.Add(this.btnEliminaZeroPunti);
             this.panelSalvataggi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSalvataggi.Location = new System.Drawing.Point(0, 0);
             this.panelSalvataggi.Name = "panelSalvataggi";
@@ -439,6 +456,22 @@
             this.btnModificaSel.UseVisualStyleBackColor = false;
             this.btnModificaSel.Click += new System.EventHandler(this.btnModificaSel_Click);
             // 
+            // btnEliminaZeroPunti
+            // 
+            this.btnEliminaZeroPunti.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
+            this.btnEliminaZeroPunti.FlatAppearance.BorderSize = 0;
+            this.btnEliminaZeroPunti.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(68)))), ((int)(((byte)(173)))));
+            this.btnEliminaZeroPunti.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminaZeroPunti.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnEliminaZeroPunti.ForeColor = System.Drawing.Color.White;
+            this.btnEliminaZeroPunti.Location = new System.Drawing.Point(150, 485);
+            this.btnEliminaZeroPunti.Name = "btnEliminaZeroPunti";
+            this.btnEliminaZeroPunti.Size = new System.Drawing.Size(700, 40);
+            this.btnEliminaZeroPunti.TabIndex = 7;
+            this.btnEliminaZeroPunti.Text = "🗑️ Elimina Tutti con 0 Punti";
+            this.btnEliminaZeroPunti.UseVisualStyleBackColor = false;
+            this.btnEliminaZeroPunti.Click += new System.EventHandler(this.btnEliminaZeroPunti_Click);
+            // 
             // panelGame
             // 
             this.panelGame.BackColor = System.Drawing.Color.White;
@@ -488,6 +521,7 @@
         private SnakeForms.DoubleBufferedPanel panelGame;
         private System.Windows.Forms.Panel panelInfoLaterale;
         private System.Windows.Forms.Label lblPunti;
+        private System.Windows.Forms.Label lblHighScore;
         private System.Windows.Forms.Label lblEsito;
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.Button btnSalva;
@@ -508,6 +542,7 @@
         private System.Windows.Forms.Button btnDifficile;
         private System.Windows.Forms.Button btnImpossibile;
         private System.Windows.Forms.Panel panelScegliColore;
+        private System.Windows.Forms.Button btnEliminaZeroPunti;
         private System.Windows.Forms.Label lblScegliColore;
     }
 }
